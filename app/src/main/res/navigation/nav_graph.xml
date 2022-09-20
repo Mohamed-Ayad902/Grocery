@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.grocery.ui.fragments.splash.SplashFragment"
+        android:name="com.example.grocery.ui.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -16,16 +16,19 @@
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.example.grocery.ui.fragments.splash.WelcomeFragment"
+        android:name="com.example.grocery.ui.splash.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <action
             android:id="@+id/action_welcomeFragment_to_phoneAuthenticationFragment"
             app:destination="@id/phoneAuthenticationFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/phoneAuthenticationFragment"
-        android:name="com.example.grocery.ui.fragments.auth.PhoneAuthenticationFragment"
+        android:name="com.example.grocery.ui.auth.PhoneAuthenticationFragment"
         android:label="fragment_phone_authentication"
         tools:layout="@layout/fragment_phone_authentication" >
         <action
@@ -34,16 +37,19 @@
     </fragment>
     <fragment
         android:id="@+id/verifyFragment"
-        android:name="com.example.grocery.ui.fragments.auth.VerifyFragment"
+        android:name="com.example.grocery.ui.auth.VerifyFragment"
         android:label="fragment_verify"
         tools:layout="@layout/fragment_verify" >
         <action
             android:id="@+id/action_verifyFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <argument
+            android:name="verify"
+            app:argType="com.example.grocery.models.PhoneVerify" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.grocery.ui.fragments.account.ProfileFragment"
+        android:name="com.example.grocery.ui.account.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -52,10 +58,15 @@
         <action
             android:id="@+id/action_profileFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <argument
+            android:name="user"
+            app:argType="com.example.grocery.models.User"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/locationFragment"
-        android:name="com.example.grocery.ui.fragments.account.LocationFragment"
+        android:name="com.example.grocery.ui.account.LocationFragment"
         android:label="fragment_location"
         tools:layout="@layout/fragment_location" >
         <action
@@ -64,7 +75,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.grocery.ui.fragments.base.HomeFragment"
+        android:name="com.example.grocery.ui.base.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -73,7 +84,7 @@
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.example.grocery.ui.fragments.base.CartFragment"
+        android:name="com.example.grocery.ui.base.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" >
         <action
@@ -82,12 +93,12 @@
     </fragment>
     <fragment
         android:id="@+id/exploreFragment"
-        android:name="com.example.grocery.ui.fragments.base.ExploreFragment"
+        android:name="com.example.grocery.ui.base.ExploreFragment"
         android:label="fragment_explore"
         tools:layout="@layout/fragment_explore" />
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.example.grocery.ui.fragments.base.FavoriteFragment"
+        android:name="com.example.grocery.ui.base.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" >
         <action
@@ -99,12 +110,12 @@
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.example.grocery.ui.fragments.base.DetailsFragment"
+        android:name="com.example.grocery.ui.base.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" />
     <fragment
         android:id="@+id/checkOutOrderFragment"
-        android:name="com.example.grocery.ui.fragments.order.CheckOutOrderFragment"
+        android:name="com.example.grocery.ui.order.CheckOutOrderFragment"
         android:label="fragment_check_out_order"
         tools:layout="@layout/fragment_check_out_order" >
         <action
@@ -113,7 +124,7 @@
     </fragment>
     <fragment
         android:id="@+id/orderDetailsFragment"
-        android:name="com.example.grocery.ui.fragments.order.OrderDetailsFragment"
+        android:name="com.example.grocery.ui.order.OrderDetailsFragment"
         android:label="fragment_order_details"
         tools:layout="@layout/fragment_order_details" >
         <action
@@ -122,12 +133,12 @@
     </fragment>
     <fragment
         android:id="@+id/trackOrderFragment2"
-        android:name="com.example.grocery.ui.fragments.order.TrackOrderFragment"
+        android:name="com.example.grocery.ui.order.TrackOrderFragment"
         android:label="fragment_track_order"
         tools:layout="@layout/fragment_track_order" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.grocery.ui.fragments.base.SettingsFragment"
+        android:name="com.example.grocery.ui.base.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" >
         <action
@@ -145,7 +156,7 @@
     </fragment>
     <fragment
         android:id="@+id/ordersFragment"
-        android:name="com.example.grocery.ui.fragments.order.OrdersFragment"
+        android:name="com.example.grocery.ui.order.OrdersFragment"
         android:label="fragment_orders"
         tools:layout="@layout/fragment_orders" >
         <action

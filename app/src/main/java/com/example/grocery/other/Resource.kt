@@ -1,4 +1,4 @@
-package com.mhmdawad.superest.util
+package com.example.grocery.other
 
 sealed class Resource<T>(
     val data: T? = null,

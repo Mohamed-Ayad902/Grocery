@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.example.grocery.models.Product
 
 @Database(entities = [Product::class], version = 1)
-abstract class ProductDatabase :RoomDatabase(){
+abstract class FavoriteDatabase :RoomDatabase(){
 
-    abstract fun dao():ProductDao
+    abstract fun dao():FavoriteDao
 }

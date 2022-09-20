@@ -1,22 +1,21 @@
-package com.mhmdawad.superest.util.helper
+package com.example.grocery.other
 
 import android.content.SharedPreferences
-import com.mhmdawad.superest.util.FIRST_LOGGED_IN_APP
 import javax.inject.Inject
 
 class SharedPreferenceHelper
 @Inject
 constructor(
     private val sharedPref: SharedPreferences,
-){
+) {
 
-    private fun getBooleanValue(): Boolean{
-        return sharedPref.getBoolean(FIRST_LOGGED_IN_APP, true)
+    private fun getBooleanValue(): Boolean {
+        return sharedPref.getBoolean(Constants.KEY_IS_FIRST_TIME, true)
     }
 
-    private fun changeBooleanValueToFalse(){
+    private fun changeBooleanValueToFalse() {
         val editor = sharedPref.edit()
-        editor.putBoolean(FIRST_LOGGED_IN_APP, false).apply()
+        editor.putBoolean(Constants.KEY_IS_FIRST_TIME, false).apply()
     }
 
     fun checkIfFirstAppOpened(): Boolean {

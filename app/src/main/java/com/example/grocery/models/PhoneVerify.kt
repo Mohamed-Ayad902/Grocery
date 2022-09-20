@@ -1,13 +1,11 @@
-package com.mhmdawad.superest.model
+package com.example.grocery.models
 
-import android.os.Parcelable
 import com.google.firebase.auth.PhoneAuthProvider
-import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
 
-@Parcelize
-data class PhoneVerificationModel (
+data class PhoneVerify(
     val verificationId: String,
     val verificationToken: PhoneAuthProvider.ForceResendingToken,
     val phoneNumber: String
-): Parcelable
+) : Serializable

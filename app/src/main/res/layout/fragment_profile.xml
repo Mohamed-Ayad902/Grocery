@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/_30sdp"
-    tools:context=".ui.fragments.account.ProfileFragment">
+    tools:context=".ui.account.ProfileFragment">
 
 
     <com.makeramen.roundedimageview.RoundedImageView
@@ -75,7 +75,7 @@
             android:drawableTint="@color/primary"
             android:hint="Location"
             android:inputType="text"
-            android:textColor="@color/primary" />
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 

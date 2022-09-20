@@ -1,4 +1,7 @@
 package com.example.grocery.di
 
-class GroceryApp {
-}
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+
+@HiltAndroidApp
+class GroceryApp : Application()

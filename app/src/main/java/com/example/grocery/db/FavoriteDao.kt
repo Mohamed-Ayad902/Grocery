@@ -8,7 +8,7 @@ import com.example.grocery.models.Product
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface ProductDao {
+interface FavoriteDao {
 
     @Insert
     fun addProduct(product: Product)
@@ -17,7 +17,10 @@ interface ProductDao {
     fun deleteProduct(product: Product)
 
     @Query("select * from favorite_table where id =:id")
-    fun getProduct(id: String)
+    fun getProductIfSaved(id: String): Product?
+
+    @Query("select * from favorite_table where id =:id")
+    fun getProductFlow(id: String): Flow<Product?>
 
     @Query("select * from favorite_table")
     fun getAllProducts(): Flow<List<Product>>
