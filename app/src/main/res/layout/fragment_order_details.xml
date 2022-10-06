@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/gradient_bg"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.order.OrderDetailsFragment">
+    tools:context=".ui.order.OrderDetailsFragment">
 
     <ImageButton
         android:id="@+id/btn_back"
@@ -16,7 +17,8 @@
         android:padding="@dimen/_4sdp"
         android:src="@drawable/ic_baseline_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
     <TextView
         android:id="@+id/tv_orderIdHeader"
@@ -25,7 +27,7 @@
         android:layout_marginTop="@dimen/_30sdp"
         android:gravity="center"
         android:text="Order Num"
-        android:textColor="@color/primary"
+        android:textColor="@color/white"
         android:textSize="@dimen/_22ssp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/btn_back" />
@@ -36,7 +38,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="S50WF86N198OP"
-        android:textColor="@color/dark_gray"
+        android:textColor="@color/gray"
         android:textSize="@dimen/_11ssp"
         app:layout_constraintTop_toBottomOf="@id/tv_orderIdHeader" />
 

@@ -9,9 +9,12 @@
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/drawable-v24/ic_minus.xml" value="0.1355" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/drawable-v24/ic_plus.xml" value="0.1355" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/drawable/button_bg.xml" value="0.112" />
+        <entry key="..\:/Android Projects/Grocery/app/src/main/res/drawable/gradient_bg.xml" value="0.1355" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/drawable/ic_add.xml" value="0.1355" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.1355" />
+        <entry key="..\:/Android Projects/Grocery/app/src/main/res/drawable/ic_logo.xml" value="0.1355" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/drawable/search_bg.xml" value="0.1355" />
+        <entry key="..\:/Android Projects/Grocery/app/src/main/res/drawable/solid_bg.xml" value="0.1505" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/drawable/verify_bg.xml" value="0.112" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_about_us.xml" value="0.2441123188405797" />
@@ -23,13 +26,14 @@
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_home.xml" value="0.2441123188405797" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_location.xml" value="0.2441123188405797" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_login.xml" value="0.22826086956521738" />
-        <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_order_details.xml" value="0.16" />
+        <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_order_details.xml" value="0.2" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_orders.xml" value="0.2441123188405797" />
+        <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_phone_authentication.xml" value="0.2" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_profile.xml" value="0.176" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_settings.xml" value="0.2441123188405797" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_splash.xml" value="0.22826086956521738" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_track_order.xml" value="0.2441123188405797" />
-        <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_verify.xml" value="0.22826086956521738" />
+        <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_verify.xml" value="0.2" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/fragment_welcome.xml" value="0.2" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/layout/protein_layout.xml" value="0.2441123188405797" />
         <entry key="..\:/Android Projects/Grocery/app/src/main/res/menu/bottom_menu.xml" value="0.27447916666666666" />

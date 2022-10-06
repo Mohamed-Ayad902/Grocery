@@ -14,28 +14,31 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.example.grocery.R
 import com.example.grocery.databinding.FragmentProfileBinding
 import com.example.grocery.other.Constants
 import com.example.grocery.other.Resource
 import com.example.grocery.other.showToast
 import com.example.grocery.ui.auth.AuthenticationViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 private const val TAG = "ProfileFragment mohamed"
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private val authViewModel by activityViewModels<AuthenticationViewModel>()
     private val userInfoViewModel by activityViewModels<UserViewModel>()
 
     private var image: Uri? = null
+    private var hasSelectedLocation = false
     private val args by navArgs<ProfileFragmentArgs>()
-    private val user = args.user
-
 
     private lateinit var binding: FragmentProfileBinding
 
@@ -57,20 +60,21 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservers()
+        val user = args.user
 
         binding.apply {
             btnSubmit.setOnClickListener {
                 etName.error = null
-                etLocation.error = null
 
                 if (etName.editText?.text.toString().trim().isEmpty())
                     etName.error = "Name is required"
-                else if (etLocation.editText?.text.toString().trim().isEmpty())
-                    etLocation.error = "Select your location"
-                else if (image == null || user == null)
+                else if (!hasSelectedLocation)
+                    showToast("Select your location")
+                else if (image == null)
                     showToast("Select profile picture")
                 else
                     submitData()
+                Log.d(TAG, "onViewCreated: $user    ${image.toString()}")
             }
 
             imageView.setOnClickListener {
@@ -79,6 +83,11 @@ class ProfileFragment : Fragment() {
                 intent.action = Intent.ACTION_GET_CONTENT
                 resultLauncher.launch(Intent.createChooser(intent, "Select Picture"))
             }
+
+            etLocation.setOnClickListener {
+                findNavController().navigate(R.id.action_profileFragment_to_locationFragment)
+            }
+
         }
 
     }
@@ -93,24 +102,26 @@ class ProfileFragment : Fragment() {
 
     private fun submitData() {
         val name = binding.etName.editText?.text.toString().trim()
-        val location = binding.etLocation.editText?.text.toString().trim()
-        authViewModel.uploadUserInformation(name, image, location)
+        val location = binding.tvLocation.text.toString().trim()
+        authViewModel.updateUserInfo(name, image, location)
     }
 
     private fun subscribeToObservers() {
         userInfoViewModel.userLocation.collectLatest(viewLifecycleOwner) {
             it?.let {
                 binding.apply {
-                    etLocation.editText?.setText(it)
-                    etLocation.editText?.setTextColor(Constants.COLOR_GREEN)
+                    tvLocation.text = it
+                    tvLocation.setTextColor(Constants.COLOR_GREEN)
                 }
+                hasSelectedLocation = true
             }
         }
 
         authViewModel.userInfo.collectLatest(viewLifecycleOwner) {
             when (it) {
                 is Resource.Error -> {
-                    Log.e(TAG, "observing user: error ${it.msg!!}")
+                    Log.e(TAG, "observing user: error ${it.message!!}")
+                    showToast("error updating account")
                 }
                 is Resource.Idle -> {
                     Log.d(TAG, "observing user: Idle")
@@ -120,7 +131,8 @@ class ProfileFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     Log.d(TAG, "observing user: success ${it.data}")
-
+                    showToast(it.data!!)
+                    findNavController().popBackStack()
                 }
             }
         }

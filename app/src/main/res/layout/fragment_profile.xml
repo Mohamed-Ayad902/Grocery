@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg"
     android:padding="@dimen/_30sdp"
     tools:context=".ui.account.ProfileFragment">
 
@@ -14,13 +15,13 @@
         android:layout_height="@dimen/_150sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:scaleType="centerCrop"
+        android:src="@drawable/mbg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:riv_border_color="@color/primary"
         app:riv_border_width="@dimen/_2sdp"
-        app:riv_oval="true"
-        tools:src="@drawable/mbg" />
+        app:riv_oval="true" />
 
     <ImageView
         android:id="@+id/btn_selectImage"
@@ -30,8 +31,7 @@
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="@id/imageView"
         app:layout_constraintEnd_toEndOf="@id/imageView"
-        app:layout_constraintTop_toTopOf="@id/imageView"
-        />
+        app:layout_constraintTop_toTopOf="@id/imageView" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_name"
@@ -43,6 +43,8 @@
         app:boxCornerRadiusBottomStart="@dimen/_10sdp"
         app:boxCornerRadiusTopEnd="@dimen/_10sdp"
         app:boxCornerRadiusTopStart="@dimen/_10sdp"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="@dimen/_1sdp"
         app:layout_constraintTop_toBottomOf="@id/imageView">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -50,34 +52,55 @@
             android:layout_height="match_parent"
             android:hint="Name"
             android:inputType="text"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
+    <!--    <com.google.android.material.textfield.TextInputLayout-->
+    <!--        android:id="@+id/et_location"-->
+    <!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="@dimen/_10sdp"-->
+    <!--        app:boxCornerRadiusBottomEnd="@dimen/_10sdp"-->
+    <!--        app:boxCornerRadiusBottomStart="@dimen/_10sdp"-->
+    <!--        app:boxCornerRadiusTopEnd="@dimen/_10sdp"-->
+    <!--        app:boxCornerRadiusTopStart="@dimen/_10sdp"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/et_name">-->
+
+    <!--        <com.google.android.material.textfield.TextInputEditText-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:drawableEnd="@drawable/ic_location"-->
+    <!--            android:drawableTint="@color/primary"-->
+    <!--            android:hint="Location"-->
+    <!--            android:inputType="text" />-->
+
+    <!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/et_location"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
-        app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
-        app:boxCornerRadiusBottomStart="@dimen/_10sdp"
-        app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-        app:boxCornerRadiusTopStart="@dimen/_10sdp"
+        android:background="@drawable/location_bg"
         app:layout_constraintTop_toBottomOf="@id/et_name">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
+            android:id="@+id/tv_location"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawableEnd="@drawable/ic_location"
-            android:drawableTint="@color/primary"
-            android:hint="Location"
-            android:inputType="text"
-            />
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="@dimen/_12sdp"
+            android:text="Location"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11ssp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_submit"

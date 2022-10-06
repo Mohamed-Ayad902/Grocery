@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.base.HomeFragment">
+    android:background="@drawable/gradient_bg"
+    tools:context=".ui.base.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,7 +18,7 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="Welcome back,"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +50,6 @@
             app:riv_oval="true"
             tools:src="@drawable/mbg" />
 
-
         <EditText
             android:id="@+id/et_search"
             android:layout_width="match_parent"
@@ -59,18 +59,21 @@
             android:background="@drawable/search_bg"
             android:drawableStart="@drawable/ic_round_search_24"
             android:drawablePadding="@dimen/_5sdp"
-            android:drawableTint="@color/dark_gray"
+            android:drawableTint="@color/gray"
             android:hint="Search"
+            android:imeOptions="actionSearch"
             android:importantForAutofill="no"
+            android:inputType="text"
+            android:maxLines="1"
             android:padding="@dimen/_10sdp"
             android:textColor="@color/white"
             android:textColorHint="@color/dark_gray"
             app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
         <com.smarteist.autoimageslider.SliderView
-            android:id="@+id/slider"
+            android:id="@+id/offers_slider"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_150sdp"
+            android:layout_height="@dimen/_180sdp"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_8sdp"
@@ -86,7 +89,9 @@
             app:sliderIndicatorRadius="@dimen/_2sdp"
             app:sliderIndicatorSelectedColor="@color/primary"
             app:sliderIndicatorUnselectedColor="@color/dark_gray"
-            app:sliderScrollTimeInSec="2" />
+            app:sliderScrollTimeInSec="2"
+            app:sliderStartAutoCycle="true" />
+
 
         <TextView
             android:id="@+id/tv_categories"
@@ -95,11 +100,11 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="Categories"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/slider" />
+            app:layout_constraintTop_toBottomOf="@id/offers_slider" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categoriesRecyclerView"
@@ -109,13 +114,13 @@
             app:layout_constraintTop_toBottomOf="@id/tv_categories" />
 
         <TextView
-            android:id="@+id/tv_bestDeals"
+            android:id="@+id/tv_hotAndNew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="Best Deals"
-            android:textColor="@color/black"
+            android:text="Hot &amp; new"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -127,111 +132,111 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_8sdp"
             android:text="See All"
-            android:textColor="@color/primary"
+            android:textColor="@color/gray"
             android:textSize="@dimen/_11ssp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_bestDeals"
+            app:layout_constraintBottom_toBottomOf="@id/tv_hotAndNew"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_bestDeals" />
+            app:layout_constraintTop_toTopOf="@id/tv_hotAndNew" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/bestDealsRecyclerView"
+            android:id="@+id/hotAndNewRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_bestDeals" />
+            app:layout_constraintTop_toBottomOf="@id/tv_hotAndNew" />
 
-        <TextView
-            android:id="@+id/tv_vegetables"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="Fresh Vegetables"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/bestDealsRecyclerView" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/tv_vegetables"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="@dimen/_8sdp"-->
+        <!--            android:layout_marginTop="@dimen/_10sdp"-->
+        <!--            android:text="Fresh Vegetables"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:textSize="@dimen/_14ssp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/hotAndNewRecyclerView" />-->
 
 
-        <TextView
-            android:id="@+id/btn_seeAllVegetables"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:text="See All"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/_11ssp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_vegetables"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_vegetables" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/btn_seeAllVegetables"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginEnd="@dimen/_8sdp"-->
+        <!--            android:text="See All"-->
+        <!--            android:textColor="@color/gray"-->
+        <!--            android:textSize="@dimen/_11ssp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/tv_vegetables"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/tv_vegetables" />-->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/vegetablesRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintTop_toBottomOf="@id/tv_vegetables" />
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/vegetablesRecyclerView"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="@dimen/_10sdp"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/tv_vegetables" />-->
 
-        <TextView
-            android:id="@+id/tv_eggAndMilk"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="Eggs and milk"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/vegetablesRecyclerView" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/tv_eggAndMilk"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="@dimen/_8sdp"-->
+        <!--            android:layout_marginTop="@dimen/_10sdp"-->
+        <!--            android:text="Eggs and milk"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:textSize="@dimen/_14ssp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/vegetablesRecyclerView" />-->
 
-        <TextView
-            android:id="@+id/btn_seeAllEggs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:text="See All"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/_11ssp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_eggAndMilk"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_eggAndMilk" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/btn_seeAllEggs"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginEnd="@dimen/_8sdp"-->
+        <!--            android:text="See All"-->
+        <!--            android:textColor="@color/gray"-->
+        <!--            android:textSize="@dimen/_11ssp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/tv_eggAndMilk"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/tv_eggAndMilk" />-->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/eggsRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintTop_toBottomOf="@id/tv_eggAndMilk" />
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/eggsRecyclerView"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="@dimen/_10sdp"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/tv_eggAndMilk" />-->
 
-        <TextView
-            android:id="@+id/tv_cereal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="Cereal"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/eggsRecyclerView" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/tv_cereal"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="@dimen/_8sdp"-->
+        <!--            android:layout_marginTop="@dimen/_10sdp"-->
+        <!--            android:text="Cereal"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:textSize="@dimen/_14ssp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/eggsRecyclerView" />-->
 
-        <TextView
-            android:id="@+id/btn_seeAllCereal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:text="See All"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/_11ssp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_cereal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_cereal" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/btn_seeAllCereal"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginEnd="@dimen/_8sdp"-->
+        <!--            android:text="See All"-->
+        <!--            android:textColor="@color/gray"-->
+        <!--            android:textSize="@dimen/_11ssp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/tv_cereal"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/tv_cereal" />-->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/cerealRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintTop_toBottomOf="@id/tv_cereal" />
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/cerealRecyclerView"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="@dimen/_10sdp"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/tv_cereal" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

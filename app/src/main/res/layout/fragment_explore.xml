@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/gradient_bg"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.base.ExploreFragment">
+    tools:context=".ui.base.ExploreFragment">
 
 
     <EditText
@@ -16,7 +17,7 @@
         android:background="@drawable/search_bg"
         android:drawableStart="@drawable/ic_round_search_24"
         android:drawablePadding="@dimen/_5sdp"
-        android:drawableTint="@color/dark_gray"
+        android:drawableTint="@color/gray"
         android:hint="Search"
         android:importantForAutofill="no"
         android:padding="@dimen/_10sdp"

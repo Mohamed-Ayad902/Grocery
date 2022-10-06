@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/proteinProgressBar"
+        android:id="@+id/progress_bar"
         android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_80sdp"
         app:indicatorColor="@color/primary"
@@ -21,30 +21,31 @@
         android:layout_height="59dp"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@id/proteinProgressBar"
-        app:layout_constraintEnd_toEndOf="@id/proteinProgressBar"
-        app:layout_constraintStart_toStartOf="@id/proteinProgressBar"
-        app:layout_constraintTop_toTopOf="@id/proteinProgressBar">
+        app:layout_constraintBottom_toBottomOf="@id/progress_bar"
+        app:layout_constraintEnd_toEndOf="@id/progress_bar"
+        app:layout_constraintStart_toStartOf="@id/progress_bar"
+        app:layout_constraintTop_toTopOf="@id/progress_bar">
 
         <TextView
-            android:id="@+id/tv_protein"
+            android:id="@+id/tv_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="@color/primary"
+            android:textColor="@color/gray"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
-            tools:text="170g" />
+            tools:text="16 GB" />
 
         <TextView
-            android:id="@+id/tv_protein_title"
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Protein"
-            android:textColor="@color/black"
+            android:text="Ram"
+            android:textColor="@color/gray"
             android:textSize="@dimen/_9ssp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 

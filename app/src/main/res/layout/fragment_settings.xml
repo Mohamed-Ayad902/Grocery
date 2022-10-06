@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/gradient_bg"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.base.SettingsFragment">
+    tools:context=".ui.base.SettingsFragment">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/imageView"
@@ -26,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_5sdp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,14 +48,15 @@
             android:layout_height="@dimen/_20sdp"
             android:src="@drawable/ic_my_orders"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/gray" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:text="My Orders"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="@id/iv_myOrders"
             app:layout_constraintStart_toEndOf="@id/iv_myOrders"
@@ -63,6 +65,7 @@
         <ImageView
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
+            app:tint="@color/gray"
             android:src="@drawable/ic_baseline_arrow_forward"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -82,6 +85,7 @@
             android:id="@+id/iv_myProfile"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
+            app:tint="@color/gray"
             android:src="@drawable/ic_round_settings_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -91,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:text="Account Settings"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="@id/iv_myProfile"
             app:layout_constraintStart_toEndOf="@id/iv_myProfile"
@@ -100,6 +104,7 @@
         <ImageView
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
+            app:tint="@color/gray"
             android:src="@drawable/ic_baseline_arrow_forward"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -118,6 +123,7 @@
             android:id="@+id/iv_aboutUs"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
+            app:tint="@color/gray"
             android:src="@drawable/ic_about_us"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -127,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:text="About Us"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="@id/iv_aboutUs"
             app:layout_constraintStart_toEndOf="@id/iv_aboutUs"
@@ -136,6 +142,7 @@
         <ImageView
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
+            app:tint="@color/gray"
             android:src="@drawable/ic_baseline_arrow_forward"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -156,6 +163,7 @@
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:src="@drawable/ic_location"
+            app:tint="@color/gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -164,7 +172,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:text="Delivery Location"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="@id/iv_myLocation"
             app:layout_constraintStart_toEndOf="@id/iv_myLocation"
@@ -172,6 +180,7 @@
 
         <ImageView
             android:layout_width="@dimen/_20sdp"
+            app:tint="@color/gray"
             android:layout_height="@dimen/_20sdp"
             android:src="@drawable/ic_baseline_arrow_forward"
             app:layout_constraintEnd_toEndOf="parent"
@@ -186,7 +195,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
         android:background="@drawable/button_bg"
-        android:backgroundTint="@color/search_gray_bg"
+        android:backgroundTint="@color/purple_200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

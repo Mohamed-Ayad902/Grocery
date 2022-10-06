@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.order.OrdersFragment">
+    android:background="@drawable/gradient_bg"
+    tools:context=".ui.order.OrdersFragment">
 
     <ImageButton
         android:id="@+id/btn_back"
@@ -16,7 +17,8 @@
         android:padding="@dimen/_4sdp"
         android:src="@drawable/ic_baseline_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
     <TextView
         android:id="@+id/tv_myOrders"
@@ -24,7 +26,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="My Orders"
-        android:textColor="@color/primary"
+        android:textColor="@color/white"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/btn_back"

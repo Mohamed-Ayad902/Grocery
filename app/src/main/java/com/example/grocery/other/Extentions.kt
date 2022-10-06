@@ -1,19 +1,14 @@
 package com.example.grocery.other
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.grocery.R
 import com.example.grocery.ui.MainActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 fun MainActivity.showBottomNav() {
     val navigation = findViewById<BottomNavigationView>(R.id.bottomNavView)
@@ -32,6 +27,10 @@ fun View.hide() {
 
 fun View.show() {
     visibility = View.VISIBLE
+}
+
+fun ImageView.loadImage(link: String) {
+    Glide.with(context).load(link).placeholder(R.drawable.ic_logo).into(this)
 }
 
 fun Fragment.showToast(msg: String) {

@@ -4,13 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.base.DetailsFragment">
+    android:background="@drawable/gradient_bg"
+    tools:context=".ui.base.details.DetailsFragment">
+
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/solid_bg"
+        app:layout_constraintBottom_toBottomOf="@id/layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.5" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/card_view_shape_bottom_corners"
         android:paddingTop="@dimen/_50sdp"
         android:paddingBottom="@dimen/_10sdp"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,7 +29,7 @@
             android:id="@+id/imageView"
             android:layout_width="@dimen/_180sdp"
             android:layout_height="@dimen/_180sdp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +48,8 @@
         android:padding="@dimen/_8sdp"
         android:src="@drawable/ic_baseline_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/primary" />
 
 
     <TextView
@@ -47,24 +58,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/_21ssp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout"
-        tools:text="Apple" />
+        tools:text="G15 5510" />
 
     <TextView
-        android:id="@+id/tv_priceType"
+        android:id="@+id/tv_brand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_4sdp"
-        android:textColor="@color/dark_gray"
+        android:textColor="@color/gray"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_name"
-        tools:text="kilo price" />
+        tools:text="Dell" />
 
     <ImageView
         android:id="@+id/favoriteProduct_ImageView"
@@ -73,7 +84,7 @@
         android:layout_marginEnd="@dimen/_8sdp"
         android:padding="@dimen/_5sdp"
         android:src="@drawable/ic_favorite"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_priceType"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_brand"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_name"
         app:tint="@color/red" />
@@ -88,14 +99,15 @@
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_priceType">
+        app:layout_constraintTop_toBottomOf="@+id/tv_brand">
 
         <ImageView
             android:id="@+id/btn_minus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/_8sdp"
-            android:src="@drawable/ic_minus" />
+            android:src="@drawable/ic_minus"
+            app:tint="@color/dark_gray" />
 
         <TextView
             android:id="@+id/productQuantity_EditText"
@@ -104,6 +116,7 @@
             android:background="@drawable/card_view_shape"
             android:gravity="center"
             android:text="1"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <ImageView
@@ -111,10 +124,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/_8sdp"
-            android:src="@drawable/ic_plus" />
+            android:src="@drawable/ic_plus"
+            app:tint="@color/white" />
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_processor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quantity_layout"
+        tools:text="core i5-10500H" />
+
+    <TextView
+        android:id="@+id/tv_processorSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_processor"
+        app:layout_constraintStart_toEndOf="@id/tv_processor"
+        app:layout_constraintTop_toTopOf="@id/tv_processor"
+        tools:text="2.6-GH" />
 
     <TextView
         android:id="@+id/tv_description"
@@ -123,26 +160,27 @@
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_8sdp"
-        android:textColor="@color/dark_gray"
+        android:textColor="@color/gray"
         android:textSize="@dimen/_11ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quantity_layout"
-        tools:text="This product is pretty good and if i were you, I'd fill my cart with tons of it, otherwise I'm waisting my money on shitty products\nBelieve me but this is your last chance to have such cool thing in your cart, actually this is a quality product" />
+        app:layout_constraintTop_toBottomOf="@id/tv_processor"
+        tools:text="Dell G15 15-5510 Gaming laptop - Intel Core i7-10870H 8 Cores, 16GB RAM, 512GB SSD, Nvidia Geforce RTX 3050 4GB GDDR6 Graphics, 15.6' FHD WVA 120Hz, Backlit Keyboard, Windows 10 - Dark Shadow Grey
+Easy to use
+Personal Computer type" />
 
     <TextView
         android:id="@+id/productPrice_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_8sdp"
-        android:text="@{@string/price(product.price)}"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/quantity_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/quantity_layout"
-        tools:text="5.99$" />
+        tools:text="15,500$" />
 
 
     <LinearLayout
@@ -154,25 +192,29 @@
         app:layout_constraintTop_toBottomOf="@id/tv_description">
 
         <include
-            layout="@layout/protein_layout"
+            android:id="@+id/ram_layout"
+            layout="@layout/circular_progress_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <include
-            layout="@layout/protein_layout"
+            android:id="@+id/hdd_layout"
+            layout="@layout/circular_progress_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <include
-            layout="@layout/protein_layout"
+            android:id="@+id/ssd_layout"
+            layout="@layout/circular_progress_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <include
-            layout="@layout/protein_layout"
+            android:id="@+id/camera_layout"
+            layout="@layout/circular_progress_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />

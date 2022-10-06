@@ -59,11 +59,11 @@ class AuthenticationRepository @Inject constructor(
         userLocation: String
     ): Resource<String> {
         return try {
-            var accountStatusMessage = "Account created successfully :)"
+            var accountStatusMessage = "Account created successfully"
             if (imageUri != null) {
-                val uploadedImagePath = uploadUserImage(imageUri)
-                val userInfoModel = User(userUid, userName, uploadedImagePath, userLocation)
-                userCollection.document(userUid).set(userInfoModel).await()
+                val imagePath = uploadUserImage(imageUri)
+                val user = User(userUid, userName, imagePath, userLocation)
+                userCollection.document(userUid).set(user).await()
             } else {
                 val user = User(userUid, userName, "", userLocation)
                 userCollection.document(userUid).set(user).await()
@@ -71,7 +71,7 @@ class AuthenticationRepository @Inject constructor(
             }
             Resource.Success(accountStatusMessage)
         } catch (e: Exception) {
-            Resource.Error("Error while creating your account")
+            Resource.Error(e.message!!)
         }
     }
 
@@ -87,7 +87,7 @@ class AuthenticationRepository @Inject constructor(
             auth.signInWithCredential(credential).await()
             Resource.Success(null)
         } catch (e: Exception) {
-            Resource.Error("Ops an error occurred, please try again")
+            Resource.Error(e.message!!)
         }
     }
 
@@ -99,7 +99,11 @@ class AuthenticationRepository @Inject constructor(
                     userInfo.value = (Resource.Error("Ops an error occurred, please try again"))
                 } else {
                     val user = value.toObject(User::class.java)
-                    userInfo.value = (Resource.Success(user!!))
+                    if (user != null)
+                        userInfo.value = (Resource.Success(user))
+                    else
+                        userInfo.value = (Resource.Error("User value was null"))
+
                 }
             }
     }

@@ -2,7 +2,7 @@ package com.example.grocery.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.grocery.db.FavoriteDatabase
+import com.example.grocery.db.Database
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,17 +12,21 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class FavoriteDatabaseModule {
+class DatabaseModule {
 
     @Singleton
     @Provides
     fun provideFavoriteDatabase(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, FavoriteDatabase::class.java, "favorite_db")
+        Room.databaseBuilder(context, Database::class.java, "favorite_db")
             .fallbackToDestructiveMigration()
             .build()
 
     @Singleton
     @Provides
-    fun provideDao(db: FavoriteDatabase) = db.dao()
+    fun provideFavoriteDao(db: Database) = db.favoriteDao()
+
+    @Singleton
+    @Provides
+    fun provideCartDao(db: Database) = db.cartDao()
 
 }

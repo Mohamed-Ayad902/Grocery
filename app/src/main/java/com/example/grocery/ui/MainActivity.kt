@@ -1,7 +1,9 @@
 package com.example.grocery.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -9,8 +11,9 @@ import com.example.grocery.R
 import com.example.grocery.databinding.ActivityMainBinding
 import com.example.grocery.other.hideBottomNav
 import com.example.grocery.other.showBottomNav
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 

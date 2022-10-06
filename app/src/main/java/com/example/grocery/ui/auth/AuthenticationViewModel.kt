@@ -28,7 +28,7 @@ class AuthenticationViewModel @Inject constructor
     val userInfo: StateFlow<Resource<String>> = _userInfo
 
 
-    fun checkIfFirstAppOpened() = repository.checkIfFirstAppOpened()
+    fun isFirstTime() = repository.checkIfFirstAppOpened()
 
     fun checkIfUserLoggedIn() = repository.checkIfUserLoggedIn()
 
@@ -41,12 +41,17 @@ class AuthenticationViewModel @Inject constructor
 
     fun phoneAuthCallBack() = repository.phoneAuthCallBack(_auth)
 
-    fun uploadUserInformation(userName: String, imageUri: Uri?, userLocation: String) {
+    fun setAuthState(authState: AuthResource) {
+        _auth.value = authState
+    }
+
+    fun updateUserInfo(userName: String, imageUri: Uri?, userLocation: String) {
         _userInfo.value = Resource.Loading()
         viewModelScope.launch(Dispatchers.IO) {
             _userInfo.value = (repository.uploadUserInformation(userName, imageUri, userLocation))
         }
 
     }
+
 
 }

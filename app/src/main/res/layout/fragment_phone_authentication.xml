@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/gradient_bg"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.auth.PhoneAuthenticationFragment">
+    tools:context=".ui.auth.PhoneAuthenticationFragment">
 
 
     <ImageView
@@ -25,7 +26,7 @@
         android:layout_marginTop="@dimen/_20sdp"
         android:gravity="center"
         android:text="OTP Verification"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/_18ssp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/imageView" />
@@ -38,7 +39,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:gravity="center"
         android:text="We will send you a one time password to log you in"
-        android:textColor="@color/dark_gray"
+        android:textColor="@color/gray"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintTop_toBottomOf="@id/tv_otp" />
 
@@ -50,7 +51,7 @@
         android:layout_marginTop="@dimen/_40sdp"
         android:gravity="center"
         android:text="Enter your number"
-        android:textColor="@color/dark_gray"
+        android:textColor="@color/gray"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintTop_toBottomOf="@id/tv_hint" />
 
@@ -68,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+20-"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold" />
 
@@ -79,8 +80,9 @@
             android:background="@null"
             android:hint="1234567899"
             android:inputType="number"
+            android:maxLength="11"
             android:paddingVertical="@dimen/_5sdp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold" />
 
