@@ -14,19 +14,19 @@ import javax.inject.Inject
 class DetailsViewModel @Inject constructor(private val repository: StoreRepositoryImpl) :
     ViewModel() {
 
-    private val _quantity = MutableStateFlow(0)
+    private val _quantity = MutableStateFlow(1)
     val quantity: StateFlow<Int> = _quantity
 
     private val _addToCart = MutableStateFlow("")
     val addToCart: StateFlow<String> = _addToCart
 
     fun increase() {
-        _quantity.value += 1
+        _quantity.value ++
     }
 
     fun decrease() {
-        if (_quantity.value > 0)
-            _quantity.value -= 1
+        if (_quantity.value > 1)
+            _quantity.value --
     }
 
     fun addToCart(cart: Cart) {

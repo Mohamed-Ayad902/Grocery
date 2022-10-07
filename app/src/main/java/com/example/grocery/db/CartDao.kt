@@ -2,6 +2,7 @@ package com.example.grocery.db
 
 import androidx.room.*
 import com.example.grocery.models.Cart
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CartDao {
@@ -16,6 +17,6 @@ interface CartDao {
     suspend fun updateItem(cart: Cart)
 
     @Query("select * from cart_table")
-    fun getCartItems(): List<Cart>
+    fun getCartItems(): Flow<List<Cart>>
 
 }

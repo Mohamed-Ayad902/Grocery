@@ -47,7 +47,9 @@ class DetailsFragment : Fragment() {
                     Cart(
                         laptop.name,
                         laptop.image,
+                        0,
                         laptop.id,
+                        laptop.brand,
                         laptop.price,
                         viewModel.quantity.value
                     )
@@ -87,7 +89,6 @@ class DetailsFragment : Fragment() {
             ramLayout.tvTitle.text = "Ram"
             ramLayout.tvValue.text = laptop.ram.toString()
             ramLayout.progressBar.max = 32
-            ramLayout.progressBar.progress = laptop.ram
 
             hddLayout.tvTitle.text = "HDD"
             hddLayout.tvValue.text = laptop.hdd.toString()

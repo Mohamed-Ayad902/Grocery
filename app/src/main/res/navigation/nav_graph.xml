@@ -106,7 +106,7 @@
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.example.grocery.ui.base.CartFragment"
+        android:name="com.example.grocery.ui.base.cart.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" >
         <action

@@ -22,18 +22,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/_50sdp"
-        android:paddingBottom="@dimen/_10sdp"
         app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_marginTop="-50dp"
+            android:alpha="0.5"
+            android:background="@drawable/shadow"
+            app:layout_constraintEnd_toEndOf="@id/imageView"
+            app:layout_constraintStart_toStartOf="@id/imageView"
+            app:layout_constraintTop_toBottomOf="@id/imageView" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="@dimen/_180sdp"
-            android:layout_height="@dimen/_180sdp"
+            android:layout_width="@dimen/_220sdp"
+            android:layout_height="@dimen/_200sdp"
             android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_logo" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -52,175 +62,190 @@
         app:tint="@color/primary" />
 
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_21ssp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout"
-        tools:text="G15 5510" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_addToCart"
+        app:layout_constraintTop_toBottomOf="@id/layout">
 
-    <TextView
-        android:id="@+id/tv_brand"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name"
-        tools:text="Dell" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/favoriteProduct_ImageView"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:padding="@dimen/_5sdp"
-        android:src="@drawable/ic_favorite"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_brand"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_name"
-        app:tint="@color/red" />
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_21ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="G15 5510" />
 
-    <LinearLayout
-        android:id="@+id/quantity_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_brand">
+            <TextView
+                android:id="@+id/tv_brand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name"
+                tools:text="Dell" />
 
-        <ImageView
-            android:id="@+id/btn_minus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_8sdp"
-            android:src="@drawable/ic_minus"
-            app:tint="@color/dark_gray" />
+            <ImageView
+                android:id="@+id/favoriteProduct_ImageView"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/ic_favorite"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_brand"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_name"
+                app:tint="@color/red" />
 
-        <TextView
-            android:id="@+id/productQuantity_EditText"
-            android:layout_width="@dimen/_38sdp"
-            android:layout_height="@dimen/_38sdp"
-            android:background="@drawable/card_view_shape"
-            android:gravity="center"
-            android:text="1"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/quantity_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_brand">
 
-        <ImageView
-            android:id="@+id/btn_plus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_8sdp"
-            android:src="@drawable/ic_plus"
-            app:tint="@color/white" />
+                <ImageView
+                    android:id="@+id/btn_minus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_8sdp"
+                    android:src="@drawable/ic_minus"
+                    app:tint="@color/dark_gray" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/productQuantity_EditText"
+                    android:layout_width="@dimen/_38sdp"
+                    android:layout_height="@dimen/_38sdp"
+                    android:background="@drawable/card_view_shape"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_processor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/_11ssp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quantity_layout"
-        tools:text="core i5-10500H" />
+                <ImageView
+                    android:id="@+id/btn_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_8sdp"
+                    android:src="@drawable/ic_plus"
+                    app:tint="@color/white" />
 
-    <TextView
-        android:id="@+id/tv_processorSpeed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/_11ssp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_processor"
-        app:layout_constraintStart_toEndOf="@id/tv_processor"
-        app:layout_constraintTop_toTopOf="@id/tv_processor"
-        tools:text="2.6-GH" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/_11ssp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_processor"
-        tools:text="Dell G15 15-5510 Gaming laptop - Intel Core i7-10870H 8 Cores, 16GB RAM, 512GB SSD, Nvidia Geforce RTX 3050 4GB GDDR6 Graphics, 15.6' FHD WVA 120Hz, Backlit Keyboard, Windows 10 - Dark Shadow Grey
+            <TextView
+                android:id="@+id/tv_processor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/quantity_layout"
+                tools:text="core i5-10500H" />
+
+            <TextView
+                android:id="@+id/tv_processorSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_processor"
+                app:layout_constraintStart_toEndOf="@id/tv_processor"
+                app:layout_constraintTop_toTopOf="@id/tv_processor"
+                tools:text="2.6-GH" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_processor"
+                tools:text="Dell G15 15-5510 Gaming laptop - Intel Core i7-10870H 8 Cores, 16GB RAM, 512GB SSD, Nvidia Geforce RTX 3050 4GB GDDR6 Graphics, 15.6' FHD WVA 120Hz, Backlit Keyboard, Windows 10 - Dark Shadow Grey
 Easy to use
 Personal Computer type" />
 
-    <TextView
-        android:id="@+id/productPrice_TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_8sdp"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_14ssp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/quantity_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/quantity_layout"
-        tools:text="15,500$" />
+            <TextView
+                android:id="@+id/productPrice_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_8sdp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/quantity_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/quantity_layout"
+                tools:text="15,500$" />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_8sdp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/btn_addToCart"
-        app:layout_constraintTop_toBottomOf="@id/tv_description">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_description">
 
-        <include
-            android:id="@+id/ram_layout"
-            layout="@layout/circular_progress_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+                <include
+                    android:id="@+id/ram_layout"
+                    layout="@layout/circular_progress_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
-        <include
-            android:id="@+id/hdd_layout"
-            layout="@layout/circular_progress_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+                <include
+                    android:id="@+id/hdd_layout"
+                    layout="@layout/circular_progress_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
-        <include
-            android:id="@+id/ssd_layout"
-            layout="@layout/circular_progress_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+                <include
+                    android:id="@+id/ssd_layout"
+                    layout="@layout/circular_progress_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
-        <include
-            android:id="@+id/camera_layout"
-            layout="@layout/circular_progress_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+                <include
+                    android:id="@+id/camera_layout"
+                    layout="@layout/circular_progress_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
 
-    </LinearLayout>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_addToCart"

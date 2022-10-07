@@ -37,7 +37,7 @@ interface StoreRepository {
 
     suspend fun updateItem(cart: Cart)
 
-    fun getCartItems(): List<Cart>
+    fun getCartItems(): Flow<List<Cart>>
 
 
 }

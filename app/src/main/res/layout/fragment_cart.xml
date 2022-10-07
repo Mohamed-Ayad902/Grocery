@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/gradient_bg"
     android:layout_height="match_parent"
-    tools:context=".ui.base.CartFragment">
+    tools:context=".ui.base.cart.CartFragment">
 
     <TextView
         android:id="@+id/tv_myCart"

@@ -13,7 +13,6 @@ import com.example.grocery.models.Category
 class CategoriesAdapter(private val listener: OnCategoryClickListener) :
     RecyclerView.Adapter<CategoriesAdapter.CategoriesVH>() {
 
-
     inner class CategoriesVH(val binding: CategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
