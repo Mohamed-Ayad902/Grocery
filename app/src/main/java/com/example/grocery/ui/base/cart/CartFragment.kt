@@ -1,27 +1,25 @@
 package com.example.grocery.ui.base.cart
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grocery.adapters.CartAdapter
 import com.example.grocery.databinding.FragmentCartBinding
 import com.example.grocery.models.Cart
+import com.example.grocery.ui.account.collectLatest
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-
-private const val TAG = "CartFragment mohamed"
 
 @AndroidEntryPoint
 class CartFragment : Fragment() {
 
     private lateinit var binding: FragmentCartBinding
     private lateinit var cartAdapter: CartAdapter
+    private var totalPrice: Int = 0
     private val viewModel: CartViewModel by viewModels()
 
     override fun onCreateView(
@@ -55,10 +53,20 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launchWhenStarted {
-            viewModel.getCartItems().collectLatest {
-                Log.d(TAG, "cart items\n: $it")
-                cartAdapter.differ.submitList(it)
+
+        binding.btnCheckout.setOnClickListener {
+            findNavController().navigate(
+                CartFragmentDirections.actionCartFragmentToCheckOutOrderFragment(
+                    totalPrice,
+                    cartAdapter.differ.currentList.toTypedArray()
+                )
+            )
+        }
+
+        viewModel.getCartItems().collectLatest(viewLifecycleOwner) {
+            cartAdapter.differ.submitList(it)
+            it.forEach { item ->
+                totalPrice += item.productQuantity * item.productPrice
             }
         }
     }

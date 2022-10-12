@@ -62,6 +62,14 @@ class ProfileFragment : Fragment() {
         subscribeToObservers()
         val user = args.user
 
+        if (user != null) {
+            binding.apply {
+                etName.editText?.setText(user.name)
+                tvLocation.text = user.location
+                Glide.with(requireContext()).load(user.image).into(imageView)
+            }
+        }
+
         binding.apply {
             btnSubmit.setOnClickListener {
                 etName.error = null
@@ -74,7 +82,6 @@ class ProfileFragment : Fragment() {
                     showToast("Select profile picture")
                 else
                     submitData()
-                Log.d(TAG, "onViewCreated: $user    ${image.toString()}")
             }
 
             imageView.setOnClickListener {

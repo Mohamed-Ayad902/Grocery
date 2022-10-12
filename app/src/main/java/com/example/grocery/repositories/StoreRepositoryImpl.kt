@@ -1,21 +1,18 @@
 package com.example.grocery.repositories
 
-import com.example.grocery.db.CartDao
-import com.example.grocery.db.FavoriteDao
+import android.util.Log
 import com.example.grocery.models.*
 import com.example.grocery.other.Constants
 import com.example.grocery.other.Resource
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class StoreRepositoryImpl @Inject constructor(
     private val fireStore: FirebaseFirestore,
-    private val cartDao: CartDao,
-    private val favoriteDao: FavoriteDao
-) :
-
-    StoreRepository {
+    private val firebaseAuth: FirebaseAuth
+) : StoreRepository {
 
     override suspend fun getOffers(): Resource<List<Offer>> {
         return try {
@@ -44,6 +41,20 @@ class StoreRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getHotAndNewItems(): Resource<List<HotAndNew>> {
+        return try {
+            val hotAndNewDocument =
+                fireStore.collection(Constants.HOT_AND_NEW_COLLECTION).get().await()
+            val hotAndNewItems = mutableListOf<HotAndNew>()
+            hotAndNewDocument.forEach {
+                hotAndNewItems.add(it.toObject(HotAndNew::class.java))
+            }
+            Resource.Success(hotAndNewItems)
+        } catch (e: Exception) {
+            Resource.Error(e.message!!)
+        }
+    }
+
     override suspend fun getLaptop(id: String): Resource<Laptop> {
         return try {
             val laptopDocument =
@@ -65,34 +76,36 @@ class StoreRepositoryImpl @Inject constructor(
             if (product == null)
                 Resource.Error("product document is null", null)
             Resource.Success(product!!)
-            Resource.Error("product document is null")
         } catch (e: Exception) {
             Resource.Error(e.message!!)
         }
     }
 
-    // local database
-    // favorite
-    override suspend fun saveLaptop(laptop: Laptop) = favoriteDao.addLaptop(laptop)
+    override suspend fun uploadOrder(
+        orderLocation: String,
+        totalPrice: Int,
+        products: List<Cart>
+    ): Resource<Order> {
+        return try {
+            val orderCollection = fireStore.collection(Constants.ORDERS_COLLECTION)
+            val id = orderCollection.document().id
+            val userId = firebaseAuth.currentUser?.uid!!
 
-    override suspend fun deleteSavedLaptop(laptop: Laptop) = favoriteDao.deleteLaptop(laptop)
-
-    override fun getLaptopIfSaved(id: String) = favoriteDao.getLaptopIfSaved(id)
-
-    override fun getLaptopFlowIfSaved(id: String) = favoriteDao.getLaptopFlow(id)
-
-    override fun getAllSavedLaptops() = favoriteDao.getAllLaptops()
-
-    override fun deleteAllSavedLaptops() = favoriteDao.deleteAllLaptops()
-
-
-    // cart
-    override suspend fun addItem(cart: Cart) = cartDao.addItem(cart)
-
-    override suspend fun deleteItem(cart: Cart) = cartDao.deleteItem(cart)
-
-    override suspend fun updateItem(cart: Cart) = cartDao.updateItem(cart)
-
-    override fun getCartItems() = cartDao.getCartItems()
+            val order =
+                Order(
+                    id,
+                    userId,
+                    System.currentTimeMillis(),
+                    orderLocation,
+                    Status.PLACED,
+                    totalPrice,
+                    products
+                )
+            orderCollection.document(id).set(order).await()
+            Resource.Success(order)
+        } catch (e: Exception) {
+            Resource.Error(e.message!!)
+        }
+    }
 
 }

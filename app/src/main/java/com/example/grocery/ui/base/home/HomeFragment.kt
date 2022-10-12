@@ -8,13 +8,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grocery.R
 import com.example.grocery.adapters.CategoriesAdapter
+import com.example.grocery.adapters.HotAndNewAdapter
 import com.example.grocery.adapters.OffersAdapter
 import com.example.grocery.databinding.FragmentHomeBinding
+import com.example.grocery.models.Cart
 import com.example.grocery.models.Category
+import com.example.grocery.models.HotAndNew
 import com.example.grocery.models.Offer
 import com.example.grocery.other.Constants
 import com.example.grocery.other.Resource
@@ -35,6 +39,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var offersAdapter: OffersAdapter
     private lateinit var categoriesAdapter: CategoriesAdapter
+    private lateinit var hotAndNewAdapter: HotAndNewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +48,37 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         setupOffersAdapter()
         setupCategoriesAdapter()
+        setupHotAndNewAdapter()
         return binding.root
+    }
+
+    private fun setupHotAndNewAdapter() {
+        binding.hotAndNewRecyclerView.apply {
+            hotAndNewAdapter = HotAndNewAdapter(object : HotAndNewAdapter.OnHotItemClickListener {
+                override fun onClick(hotAndNew: HotAndNew) {
+                    storeViewModel.getProductByCategory(
+                        hotAndNew.productCategory,
+                        hotAndNew.productId
+                    )
+                }
+
+                override fun onAddToCart(hotAndNew: HotAndNew) {
+                    storeViewModel.addToCart(
+                        Cart(
+                            0,
+                            hotAndNew.name,
+                            hotAndNew.image,
+                            hotAndNew.productId,
+                            hotAndNew.brand,
+                            hotAndNew.price,
+                            1
+                        )
+                    )
+                }
+            })
+            layoutManager = GridLayoutManager(requireContext(), 2)
+            adapter = hotAndNewAdapter
+        }
     }
 
     private fun setupCategoriesAdapter() =
@@ -67,7 +102,7 @@ class HomeFragment : Fragment() {
         binding.offersSlider.apply {
             offersAdapter = OffersAdapter(object : OffersAdapter.OnOfferClickListener {
                 override fun onClick(offer: Offer) {
-                    storeViewModel.getProductByOffer(offer)
+                    storeViewModel.getProductByCategory(offer.productCategory, offer.productId)
                 }
             }, mutableListOf())
             isAutoCycle = true
@@ -79,11 +114,20 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         storeViewModel.getOffers()
         storeViewModel.getCategories()
+        storeViewModel.getHotAndNew()
 
-        binding.imageView.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_detailsFragment)
+        binding.apply {
+            imageView.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+            }
+            btnSeeAllBestDeals.setOnClickListener {
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToSeeAllFragment(
+                        Constants.HOT_AND_NEW_COLLECTION
+                    )
+                )
+            }
         }
-
         observeListeners()
 
     }
@@ -113,6 +157,12 @@ class HomeFragment : Fragment() {
                 is Resource.Idle -> {} // nothing to do
             }
         }
+
+        storeViewModel.addToCart.collectLatest(viewLifecycleOwner) {
+            if (it == "added")
+                showToast("product added to cart")
+        }
+
         storeViewModel.offers.collectLatest(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Loading -> {
@@ -132,6 +182,7 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
         storeViewModel.categories.collectLatest(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Loading -> {
@@ -150,28 +201,70 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        storeViewModel.hotAndNew.collectLatest(viewLifecycleOwner) { response ->
+            when (response) {
+                is Resource.Loading -> {
+                    Log.d(TAG, "hot and new observe loading: ")
+                }
+                is Resource.Success -> {
+                    Log.d(TAG, "hot and new observe success: ")
+                    response.data?.let {
+                        hotAndNewAdapter.differ.submitList(it)
+                    }
+                }
+                is Resource.Error -> {
+                    Log.e(TAG, "hot and new observe error: ${response.message}")
+                    showToast("error loading hot and new items")
+                }
+                is Resource.Idle -> {}
+            }
+        }
+
         storeViewModel.laptop.collectLatest(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Loading -> {
                     Log.d(TAG, "laptop observe loading:")
+                }
+                is Resource.Success -> {
+                    Log.d(TAG, "laptop observe success :")
+                    response.data?.let {
+                        findNavController().navigate(
+                            HomeFragmentDirections.actionHomeFragmentToDetailsFragment(
+                                laptop = it
+                            )
+                        )
+                    }
                 }
                 is Resource.Error -> {
                     Log.e(TAG, "laptop observe error : ${response.message}")
                     showToast("error loading laptop")
                 }
                 is Resource.Idle -> {}
+            }
+        }
+
+        storeViewModel.product.collectLatest(viewLifecycleOwner) { response ->
+            when (response) {
+                is Resource.Loading -> {
+                    Log.d(TAG, "product observe loading:")
+                }
                 is Resource.Success -> {
-                    Log.d(TAG, "laptop observe success :")
+                    Log.d(TAG, "product observe success :")
                     response.data?.let {
                         findNavController().navigate(
                             HomeFragmentDirections.actionHomeFragmentToDetailsFragment(
-                                it
+                                product = it
                             )
                         )
                     }
                 }
+                is Resource.Error -> {
+                    Log.e(TAG, "product observe error : ${response.message}")
+                    showToast("error loading product")
+                }
+                is Resource.Idle -> {}
             }
         }
-
     }
 }

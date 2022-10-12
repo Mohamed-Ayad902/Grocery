@@ -1,10 +1,10 @@
 package com.example.grocery.models
 
-data class Offer(
+data class HotAndNew(
     val productId: String = "",
     val productCategory: String = "",
     val image: String = "",
-    val oldPrice: Int = 0,
-    val newPrice: Int = 0,
-    val discount: Double = 0.0
+    val price: Int = 0,
+    val brand: String = "",
+    val name: String = ""
 )

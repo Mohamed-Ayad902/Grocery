@@ -1,13 +1,14 @@
 package com.example.grocery.ui.base
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.grocery.R
 import com.example.grocery.databinding.FragmentSettingsBinding
+import com.example.grocery.other.showToast
 
 class SettingsFragment : Fragment() {
 
@@ -35,6 +36,9 @@ class SettingsFragment : Fragment() {
             }
             btnLogout.setOnClickListener {
                 findNavController().navigate(R.id.action_settingsFragment_to_phoneAuthenticationFragment)
+            }
+            btnAboutUs.setOnClickListener {
+                showToast("mohamed.ayad7474@gmail.com")
             }
         }
     }

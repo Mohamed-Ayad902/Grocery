@@ -6,7 +6,8 @@ import java.io.Serializable
 
 @Entity(tableName = "laptop_table")
 data class Laptop(
-    @PrimaryKey var id: String = "",
+    @PrimaryKey val
+    id: String = "",
     val name: String = "",
     val brand: String = "",
     val processor: String = "",
@@ -21,4 +22,4 @@ data class Laptop(
     val description: String = "",
     val camera: Int = 0,
     val size: Double = 0.0,
-): Serializable
+) : Serializable

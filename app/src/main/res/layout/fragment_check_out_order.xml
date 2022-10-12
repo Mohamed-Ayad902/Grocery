@@ -98,6 +98,14 @@
 
     </RadioGroup>
 
+    <com.stripe.android.view.CardInputWidget
+        android:id="@+id/cardInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tv_paymentMethod" />
+
     <TextView
         android:id="@+id/tv_totalPriceHeader"
         android:layout_width="0dp"
@@ -111,7 +119,8 @@
         app:layout_constraintEnd_toStartOf="@id/tv_totalPrice"
         app:layout_constraintStart_toEndOf="@id/tv_totalPrice"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@id/cardInput"
+        app:layout_goneMarginTop="@dimen/_20sdp" />
 
     <TextView
         android:id="@+id/tv_totalPrice"

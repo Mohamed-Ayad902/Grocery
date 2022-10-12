@@ -3,13 +3,13 @@ package com.example.grocery.ui.base.cart
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.grocery.models.Cart
-import com.example.grocery.repositories.StoreRepositoryImpl
+import com.example.grocery.repositories.LocalRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CartViewModel @Inject constructor(private val repository: StoreRepositoryImpl) : ViewModel() {
+class CartViewModel @Inject constructor(private val repository: LocalRepositoryImpl) : ViewModel() {
 
 
     fun getCartItems() = repository.getCartItems()
