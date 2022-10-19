@@ -214,11 +214,11 @@
         android:name="com.example.grocery.ui.base.all.SeeAllFragment"
         android:label="fragment_see_all"
         tools:layout="@layout/fragment_see_all" >
-        <action
-            android:id="@+id/action_seeAllFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
         <argument
             android:name="category"
             app:argType="string" />
+        <action
+            android:id="@+id/action_seeAllFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
 </navigation>

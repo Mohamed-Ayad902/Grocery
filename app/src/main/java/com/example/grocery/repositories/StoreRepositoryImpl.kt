@@ -1,6 +1,5 @@
 package com.example.grocery.repositories
 
-import android.util.Log
 import com.example.grocery.models.*
 import com.example.grocery.other.Constants
 import com.example.grocery.other.Resource
@@ -55,7 +54,37 @@ class StoreRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getLaptop(id: String): Resource<Laptop> {
+    override suspend fun getAllProductsByCategory(category: String): Resource<List<Product>> {
+        return try {
+            val productsDocument =
+                fireStore.collection(Constants.PRODUCTS_COLLECTION)
+                    .whereEqualTo("category", category).get().await()
+            val products = mutableListOf<Product>()
+            for (document in productsDocument.documents) {
+                document.toObject(Product::class.java)?.let { products.add(it) }
+            }
+            Resource.Success(products)
+        } catch (e: Exception) {
+            Resource.Error(e.message!!)
+        }
+    }
+
+    override suspend fun getAllLaptops(): Resource<List<Laptop>> {
+        return try {
+            val laptopsDocument =
+                fireStore.collection(Constants.PRODUCTS_COLLECTION)
+                    .whereEqualTo("category", Constants.CATEGORY_LAPTOP).get().await()
+            val laptops = mutableListOf<Laptop>()
+            for (document in laptopsDocument.documents) {
+                document.toObject(Laptop::class.java)?.let { laptops.add(it) }
+            }
+            Resource.Success(laptops)
+        } catch (e: Exception) {
+            Resource.Error(e.message!!)
+        }
+    }
+
+    override suspend fun getLaptopById(id: String): Resource<Laptop> {
         return try {
             val laptopDocument =
                 fireStore.collection(Constants.PRODUCTS_COLLECTION).document(id).get().await()
@@ -68,7 +97,7 @@ class StoreRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getProduct(id: String): Resource<Product> {
+    override suspend fun getProductById(id: String): Resource<Product> {
         return try {
             val productDocument =
                 fireStore.collection(Constants.PRODUCTS_COLLECTION).document(id).get().await()

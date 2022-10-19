@@ -1,8 +1,10 @@
-package com.example.grocery.ui.base.home
+package com.example.grocery.ui.base.all
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.grocery.models.*
+import com.example.grocery.models.Cart
+import com.example.grocery.models.Laptop
+import com.example.grocery.models.Product
 import com.example.grocery.other.Constants
 import com.example.grocery.other.Resource
 import com.example.grocery.repositories.LocalRepositoryImpl
@@ -15,23 +17,21 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class SeeAllViewModel @Inject constructor(
     private val storeRepository: StoreRepositoryImpl,
     private val localRepository: LocalRepositoryImpl
 ) : ViewModel() {
 
-    private val _addToCart = MutableStateFlow("")
-    val addToCart: StateFlow<String> = _addToCart
+    private val _products: MutableStateFlow<Resource<List<Product>>> =
+        MutableStateFlow(Resource.Idle())
+    val products: StateFlow<Resource<List<Product>>> = _products
 
-    private val _offers = MutableStateFlow<Resource<List<Offer>>>(Resource.Idle())
-    val offers: StateFlow<Resource<List<Offer>>> = _offers
+    private val _laptops: MutableStateFlow<Resource<List<Laptop>>> =
+        MutableStateFlow(Resource.Idle())
+    val laptops: StateFlow<Resource<List<Laptop>>> = _laptops
 
-    private val _categories = MutableStateFlow<Resource<List<Category>>>(Resource.Idle())
-    val categories: StateFlow<Resource<List<Category>>> = _categories
-
-    private val _hotAndNew = MutableStateFlow<Resource<List<HotAndNew>>>(Resource.Idle())
-    val hotAndNew: StateFlow<Resource<List<HotAndNew>>> = _hotAndNew
 
     private val _laptop = MutableStateFlow<Resource<Laptop>>(Resource.Idle())
     val laptop: StateFlow<Resource<Laptop>> = _laptop
@@ -39,44 +39,41 @@ class HomeViewModel @Inject constructor(
     private val _product = MutableStateFlow<Resource<Product>>(Resource.Idle())
     val product: StateFlow<Resource<Product>> = _product
 
+    private val _addToCart = MutableStateFlow("")
+    val addToCart: StateFlow<String> = _addToCart
+
     fun addToCart(cart: Cart) {
         viewModelScope.launch {
             _addToCart.value = localRepository.addItem(cart).toString()
             _addToCart.value = "added"
+            delay(500)
+            _addToCart.value = ""
         }
     }
 
-    fun getOffers() {
+    fun seeAllProductsByCategory(category: String) {
+        if (category == Constants.CATEGORY_LAPTOP) {
+            getLaptops()
+        } else {
+            getProducts(category)
+        }
+    }
+
+    private fun getLaptops() {
         viewModelScope.launch(Dispatchers.IO) {
-            _offers.value = Resource.Loading()
-            _offers.value = storeRepository.getOffers()
+            _laptops.value = Resource.Loading()
+            _laptops.value = storeRepository.getAllLaptops()
         }
     }
 
-    fun getCategories() {
+    private fun getProducts(category: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _categories.value = Resource.Loading()
-            _categories.value = storeRepository.getCategories()
+            _products.value = Resource.Loading()
+            _products.value = storeRepository.getAllProductsByCategory(category)
         }
     }
 
-    fun getHotAndNew() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _hotAndNew.value = Resource.Loading()
-            _hotAndNew.value = storeRepository.getHotAndNewItems()
-        }
-    }
-
-    fun getProductByCategory(category: String, id: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (category == Constants.CATEGORY_LAPTOP)
-                getLaptop(id)
-            else
-                getProduct(id)
-        }
-    }
-
-    private fun getLaptop(id: String) {
+    fun getLaptop(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _laptop.value = Resource.Loading()
             _laptop.value = storeRepository.getLaptopById(id)
@@ -85,7 +82,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getProduct(id: String) {
+    fun getProduct(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _product.value = Resource.Loading()
             _product.value = storeRepository.getProductById(id)
@@ -93,6 +90,5 @@ class HomeViewModel @Inject constructor(
             _product.value = Resource.Idle()
         }
     }
-
 
 }

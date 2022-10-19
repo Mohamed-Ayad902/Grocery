@@ -94,9 +94,9 @@ class AuthenticationRepository @Inject constructor(
     // check if user has data into firebase fireStore or not.
     fun getUserInformation(userInfo: MutableStateFlow<Resource<User>>) {
         fireStore.collection(USERS_COLLECTION).document(userUid)
-            .addSnapshotListener { value, _ ->
+            .addSnapshotListener { value, error ->
                 if (value == null) {
-                    userInfo.value = (Resource.Error("Ops an error occurred, please try again"))
+                    userInfo.value = (Resource.Error(error?.message!!))
                 } else {
                     val user = value.toObject(User::class.java)
                     if (user != null)

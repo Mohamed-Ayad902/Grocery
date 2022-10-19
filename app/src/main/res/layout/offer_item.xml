@@ -9,6 +9,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/_20sdp"
         android:scaleType="fitXY"
         tools:src="@drawable/mbg" />
 
