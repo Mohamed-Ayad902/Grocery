@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CheckoutViewModel @Inject constructor(
-    private val paymentRepository: PaymentRepositoryImpl,
+//    private val paymentRepository: PaymentRepositoryImpl,
     private val repository: StoreRepositoryImpl
 ) : ViewModel() {
 
@@ -29,14 +29,14 @@ class CheckoutViewModel @Inject constructor(
     private val _order = MutableStateFlow<Resource<Order>>(Resource.Idle())
     val order: StateFlow<Resource<Order>> = _order
 
-    fun createPaymentIntent(
-        stripe: OnlinePayment
-    ) {
-        _paymentIntent.value = Resource.Loading()
-        viewModelScope.launch(Dispatchers.IO) {
-            _paymentIntent.value = paymentRepository.createPaymentIntent(stripe)
-        }
-    }
+//    fun createPaymentIntent(
+//        stripe: OnlinePayment
+//    ) {
+//        _paymentIntent.value = Resource.Loading()
+//        viewModelScope.launch(Dispatchers.IO) {
+//            _paymentIntent.value = paymentRepository.createPaymentIntent(stripe)
+//        }
+//    }
 
     fun uploadOrder(orderLocation: String, totalPrice: Int, products: List<Cart>) {
         _order.value = Resource.Loading()

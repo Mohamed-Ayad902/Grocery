@@ -1,6 +1,7 @@
 package com.example.grocery.di
 
 import com.example.grocery.network.ApiService
+import com.example.grocery.network.PaymentApi
 import com.example.grocery.other.Constants
 import dagger.Module
 import dagger.Provides
@@ -28,7 +29,7 @@ object RetrofitModule {
     @Provides
     fun provideRetrofit(httpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Constants.BACKEND_URL)
+            .baseUrl(Constants.PAY_MOB_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient)
             .build()
@@ -36,7 +37,7 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun providesApiService(retrofit: Retrofit): ApiService =
-        retrofit.create(ApiService::class.java)
+    fun providesApiService(retrofit: Retrofit): PaymentApi =
+        retrofit.create(PaymentApi::class.java)
 
 }

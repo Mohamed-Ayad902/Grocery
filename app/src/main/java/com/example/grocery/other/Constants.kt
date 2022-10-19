@@ -3,7 +3,15 @@ package com.example.grocery.other
 import android.graphics.Color
 
 object Constants {
+    const val ACCEPT_PAYMENT_REQUEST = 123
+    const val SHOW_SAVE_CARD = "SHOW_SAVE_CARD"
+    const val SAVE_CARD_DEFAULT = "SAVE_CARD_DEFAULT"
+
     const val BACKEND_URL = ""
+    const val PAY_MOB_BASE_URL = "https://accept.paymob.com/api/"
+    const val PAY_MOB_API_KEY =
+        "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnVZVzFsSWpvaWFXNXBkR2xoYkNJc0luQnliMlpwYkdWZmNHc2lPalUzTnpRMU5pd2lZMnhoYzNNaU9pSk5aWEpqYUdGdWRDSjkubkticHhLamVNbmdrRHBNX2pheWI3NEFvcjh0RTlac09YckoyN0pWZ3JkZHM0NjFjaWhLZnlYYThLVS1hQ1I4RlJDcG91UGFYNWczVnk1N0hMODhsOUE="
+
     const val COLOR_GREEN: Int = Color.GREEN
 
     const val SHARED_PREFERENCE_NAME = "SHARED_PREFERENCE_NAME"
@@ -26,5 +34,4 @@ object Constants {
 
     const val LOCATION_PERMISSION_REQ_CODE = 101
     const val ZOOM = 15f
-
 }
