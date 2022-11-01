@@ -1,10 +1,12 @@
 package com.example.grocery.repositories
 
+import android.util.Log
 import com.example.grocery.models.*
 import com.example.grocery.other.Constants
 import com.example.grocery.other.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -113,7 +115,8 @@ class StoreRepositoryImpl @Inject constructor(
     override suspend fun uploadOrder(
         orderLocation: String,
         totalPrice: Int,
-        products: List<Cart>
+        products: List<Cart>,
+        paymentMethod: PaymentMethod
     ): Resource<Order> {
         return try {
             val orderCollection = fireStore.collection(Constants.ORDERS_COLLECTION)
@@ -128,7 +131,8 @@ class StoreRepositoryImpl @Inject constructor(
                     orderLocation,
                     Status.PLACED,
                     totalPrice,
-                    products
+                    products,
+                    paymentMethod
                 )
             orderCollection.document(id).set(order).await()
             Resource.Success(order)
@@ -136,5 +140,99 @@ class StoreRepositoryImpl @Inject constructor(
             Resource.Error(e.message!!)
         }
     }
+
+    override suspend fun getOrderById(id: String): Resource<Order> {
+        try {
+            val request =
+                fireStore.collection(Constants.ORDERS_COLLECTION).document(id).get().await()
+
+            val order = request.toObject(Order::class.java)
+            order?.let {
+                return Resource.Success(it)
+            } ?: return Resource.Error("order found null")
+        } catch (e: Exception) {
+            return Resource.Error(e.message!!)
+        }
+    }
+
+    override suspend fun getUserOrders(): Resource<List<Order>> {
+        return try {
+            val request =
+                fireStore.collection(Constants.ORDERS_COLLECTION)
+                    .whereEqualTo("userId", firebaseAuth.currentUser?.uid!!)
+                    .orderBy("time", Query.Direction.DESCENDING).get()
+                    .await()
+            val orders = mutableListOf<Order>()
+            for (document in request.documents) {
+                document.toObject(Order::class.java)?.let { orders.add(it) }
+            }
+            Resource.Success(orders)
+        } catch (e: Exception) {
+            Resource.Error(e.message!!)
+        }
+    }
+
+    override suspend fun search(query: String): Resource<LaptopsProducts> {
+        return try {
+            val request =
+                fireStore.collection(Constants.PRODUCTS_COLLECTION)
+                    .whereArrayContains("searchKeywords", query).get().await()
+
+            val laptops = mutableListOf<Laptop>()
+            val products = mutableListOf<Product>()
+            val laptopsProducts = LaptopsProducts(laptops, products)
+            for (document in request.documents) {
+                val category = document.getString("category")
+                if (category == "laptop")
+                    document.toObject(Laptop::class.java)?.let { laptops.add(it) }
+                else
+                    document.toObject(Product::class.java)?.let { products.add(it) }
+            }
+            Resource.Success(laptopsProducts)
+        } catch (e: Exception) {
+            Resource.Error(e.message!!)
+        }
+    }
+
+    /*
+//    suspend fun updateDocuments() {
+//        val documents =
+//            fireStore.collection(Constants.PRODUCTS_COLLECTION)
+//                .whereNotEqualTo("category", "laptop")
+//                .get().await()
+//        for (document in documents.documents) {
+//            val laptop = document.toObject(Product::class.java)
+//            laptop?.let {
+//                it.searchKeywords = generateSearchKeywords(it.name)
+//
+//                fireStore.collection(Constants.PRODUCTS_COLLECTION).document(it.id)
+//                    .set(it).await()
+//                Log.e("mohamed", "updateDocuments: ${it.id} ->>>>  ${it.searchKeywords}")
+//            }
+//        }
+//    }
+//
+//    private fun generateSearchKeywords(inputText: String): List<String> {
+//        var inputString = inputText.lowercase()
+//        val keywords = mutableListOf<String>()
+//
+//        // split all words from the string
+//        val words = inputString.split(" ")
+//
+//        for (word in words) {
+//            var appendString = ""
+//
+//            // for every char in the hole string
+//            for (charPosition in inputString.indices) {
+//                appendString += inputString[charPosition].toString()
+//                keywords.add(appendString)
+//            }
+//
+//            // remove first word from the string
+//            inputString = inputString.replace("$word ", "")
+//        }
+//        return keywords
+//    }
+    */
 
 }

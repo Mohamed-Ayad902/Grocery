@@ -39,6 +39,7 @@ class HomeViewModel @Inject constructor(
     private val _product = MutableStateFlow<Resource<Product>>(Resource.Idle())
     val product: StateFlow<Resource<Product>> = _product
 
+
     fun addToCart(cart: Cart) {
         viewModelScope.launch {
             _addToCart.value = localRepository.addItem(cart).toString()

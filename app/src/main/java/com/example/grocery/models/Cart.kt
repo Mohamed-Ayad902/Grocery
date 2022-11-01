@@ -10,11 +10,11 @@ import java.io.Serializable
 @Parcelize
 data class Cart(
     @PrimaryKey(autoGenerate = true)
-    val itemId: Int,
-    val productName: String,
-    val productImage: String,
-    val productId: String,
-    val productBrand: String,
-    val productPrice: Int,
-    var productQuantity: Int,
+    val itemId: Int = 0,
+    val productName: String = "",
+    val productImage: String = "",
+    val productId: String = "",
+    val productBrand: String = "",
+    val productPrice: Int = 0,
+    var productQuantity: Int = 0,
 ) : Serializable, Parcelable

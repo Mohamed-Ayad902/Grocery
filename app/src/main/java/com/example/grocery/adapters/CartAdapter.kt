@@ -33,6 +33,7 @@ class CartAdapter(private val listener: OnCartClickListener) :
         holder.binding.apply {
             val cart = differ.currentList[position]
             tvName.text = cart.productName
+            productQuantityEditText.text = cart.productQuantity.toString()
             tvBrand.text = cart.productBrand
             tvTotalPrice.text = (cart.productPrice * cart.productQuantity).toString()
             Glide.with(holder.itemView).load(cart.productImage).transform(RoundedCorners(10))

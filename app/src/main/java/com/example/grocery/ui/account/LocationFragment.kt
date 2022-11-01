@@ -20,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.grocery.databinding.FragmentLocationBinding
 import com.example.grocery.other.Constants
 import com.example.grocery.other.Constants.ZOOM
+import com.example.grocery.other.Resource
 import com.example.grocery.other.showToast
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -61,6 +62,28 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         binding.mapView.onCreate(savedInstanceState)
         binding.mapView.getMapAsync(this)
 
+        userViewModel.user.collectLatest(viewLifecycleOwner) { response ->
+            when (response) {
+                is Resource.Error -> {
+                    Log.e(TAG, "observe user details: error -> ${response.message}")
+                }
+                is Resource.Idle -> TODO()
+                is Resource.Loading -> {
+                    Log.w(TAG, "observe user details: loading")
+                }
+                is Resource.Success -> {
+                    response.data?.let {
+                        Log.d(TAG, "observe user details success: ${it.location}")
+                    }
+                }
+            }
+        }
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        binding.mapView.onSaveInstanceState(outState)
     }
 
     private fun getCityNameFromLocation(locationLatLng: LatLng): String {
@@ -123,6 +146,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
 
     @SuppressLint("MissingPermission")
     private fun updateLocationUI() {
+        Log.d(TAG, "updateLocationUI: ")
         if (map == null) {
             return
         }
@@ -147,6 +171,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
          * cases when a location is not available.
          */
         try {
+            Log.d(TAG, "getDeviceLocation: ")
             if (locationPermissionGranted) {
                 val fusedLocationProviderClient =
                     LocationServices.getFusedLocationProviderClient(requireContext())
@@ -222,11 +247,6 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         }
         showToast("gps opened")
         return true
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        binding.mapView.onSaveInstanceState(outState)
     }
 
     override fun onPause() {

@@ -34,6 +34,8 @@ interface LocalRepository {
 
     suspend fun updateItem(cart: Cart)
 
+    suspend fun deleteCartItems()
+
     fun getCartItems(): Flow<List<Cart>>
 
 }

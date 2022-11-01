@@ -22,7 +22,18 @@ interface StoreRepository {
     suspend fun uploadOrder(
         orderLocation: String,
         totalPrice: Int,
-        products: List<Cart>
+        products: List<Cart>,
+        paymentMethod: PaymentMethod
     ): Resource<Order>
+
+    suspend fun getOrderById(id: String): Resource<Order>
+
+    suspend fun getUserOrders(): Resource<List<Order>>
+
+//    suspend fun searchLaptops(query: String): Resource<List<Laptop>>
+//
+//    suspend fun searchProducts(query: String): Resource<List<Product>>
+
+    suspend fun search(query: String): Resource<LaptopsProducts>
 
 }

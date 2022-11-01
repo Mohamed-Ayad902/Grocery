@@ -3,11 +3,9 @@ package com.example.grocery.other
 import android.graphics.Color
 
 object Constants {
-    const val ACCEPT_PAYMENT_REQUEST = 123
-    const val SHOW_SAVE_CARD = "SHOW_SAVE_CARD"
-    const val SAVE_CARD_DEFAULT = "SAVE_CARD_DEFAULT"
 
-    const val BACKEND_URL = ""
+    // new api key for maps AIzaSyB8Xdpe-HJjRCPKcA6crbtbPflS-svXF4c old was AIzaSyCdZCnPJZ2oRXcNYeeVyj180w40IxgvbmM AIzaSyCdZCnPJZ2oRXcNYeeVyj180w40IxgvbmM
+
     const val PAY_MOB_BASE_URL = "https://accept.paymob.com/api/"
     const val PAY_MOB_API_KEY =
         "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnVZVzFsSWpvaWFXNXBkR2xoYkNJc0luQnliMlpwYkdWZmNHc2lPalUzTnpRMU5pd2lZMnhoYzNNaU9pSk5aWEpqYUdGdWRDSjkubkticHhLamVNbmdrRHBNX2pheWI3NEFvcjh0RTlac09YckoyN0pWZ3JkZHM0NjFjaWhLZnlYYThLVS1hQ1I4RlJDcG91UGFYNWczVnk1N0hMODhsOUE="

@@ -123,6 +123,28 @@ class ProfileFragment : Fragment() {
                 hasSelectedLocation = true
             }
         }
+        userInfoViewModel.user.collectLatest(viewLifecycleOwner) { response ->
+            when (response) {
+                is Resource.Loading -> {
+                    Log.w(TAG, "observe user data : loading")
+                }
+                is Resource.Success -> {
+                    response.data?.let {
+                        Log.d(TAG, "observe user data : success")
+                        binding.apply {
+                            etName.editText?.setText(it.name)
+                            tvLocation.text = it.location
+                            Glide.with(requireContext()).load(it.image).into(imageView)
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    Log.e(TAG, "observe user data error :${response.message}")
+                }
+                is Resource.Idle -> {}
+            }
+
+        }
 
         authViewModel.userInfo.collectLatest(viewLifecycleOwner) {
             when (it) {

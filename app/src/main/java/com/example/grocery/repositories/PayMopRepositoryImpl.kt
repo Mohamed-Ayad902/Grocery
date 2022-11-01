@@ -1,19 +1,41 @@
 package com.example.grocery.repositories
 
-import com.example.grocery.models.PaymentKeyRequest
-import com.example.grocery.models.PaymentRequest
-import com.example.grocery.network.PaymentApiClient
+import com.example.grocery.models.*
+import com.example.grocery.network.ApiKey
+import com.example.grocery.network.PaymentApi
+import com.example.grocery.other.Resource
 import javax.inject.Inject
 
-class PayMopRepositoryImpl @Inject constructor(private val paymentApiClient: PaymentApiClient) :
+class PayMopRepositoryImpl @Inject constructor(private val api: PaymentApi) :
     PayMopRepository {
 
-    override suspend fun authenticationRequest() = paymentApiClient.authenticationRequest()
+    override suspend fun authenticationRequest(): Resource<TokenResponse> {
+        val response = api.authenticationRequest(ApiKey())
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.code().toString() + " ${response.message()} $response")
+    }
 
-    override suspend fun orderRegistration(paymentRequest: PaymentRequest) =
-        paymentApiClient.orderRegistration(paymentRequest)
+    override suspend fun orderRegistration(paymentRequest: PaymentRequest): Resource<PaymentResponse> {
+        val response = api.orderRegistration(paymentRequest)
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.code().toString() + " ${response.message()} $response")
+    }
 
-    override suspend fun paymentKeyRequest(paymentKeyRequest: PaymentKeyRequest) =
-        paymentApiClient.paymentKeyRequest(paymentKeyRequest)
-
+    override suspend fun paymentKeyRequest(paymentKeyRequest: PaymentKeyRequest): Resource<PaymentKeyResponse> {
+        val response = api.paymentKeyRequest(paymentKeyRequest)
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.code().toString() + " ${response.message()} $response")
+    }
 }

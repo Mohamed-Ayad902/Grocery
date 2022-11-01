@@ -24,7 +24,7 @@
         android:id="@+id/tv_trackOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:gravity="center"
         android:text="Track Order"
         android:textColor="@color/white"
@@ -34,12 +34,46 @@
 
     <TextView
         android:id="@+id/tv_orderId"
-        app:layout_constraintTop_toBottomOf="@id/tv_trackOrder"
-        android:gravity="center"
-        android:text="S50WF86N198OP"
-        android:textSize="@dimen/_11ssp"
-        android:textColor="@color/gray"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintTop_toBottomOf="@id/tv_trackOrder"
+        tools:text="S50WF86N198OP" />
+
+    <TextView
+        android:id="@+id/tv_orderStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintTop_toBottomOf="@id/tv_orderId"
+        tools:text="Your Order has been placed." />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/btn_backToHome"
+        app:layout_constraintTop_toBottomOf="@id/tv_orderStatus"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_speed="1" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_backToHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@drawable/button_bg"
+        android:padding="@dimen/_12sdp"
+        android:text="Back to home"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

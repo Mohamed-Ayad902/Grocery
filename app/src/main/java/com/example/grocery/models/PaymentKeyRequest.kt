@@ -3,9 +3,10 @@ package com.example.grocery.models
 data class PaymentKeyRequest(
     val auth_token: String,
     val amount_cents: String,
-    val expiration: Int,
-    val order_id: Int,
-    val currency: String,
-    val integration_id: String,
-    val lock_order_when_paid: Boolean
+    val expiration: Int = 3600,
+    val order_id: String,
+    val billingData: BillingData,
+    val currency: String = "EGP",
+    val integration_id: Int = 2959914,
+    val lock_order_when_paid: String = "false"
 )

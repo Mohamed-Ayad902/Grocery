@@ -39,6 +39,8 @@ class LocalRepositoryImpl @Inject constructor(
 
     override suspend fun updateItem(cart: Cart) = cartDao.updateItem(cart)
 
+    override suspend fun deleteCartItems() = cartDao.deleteCartItems()
+
     override fun getCartItems() = cartDao.getCartItems()
 
 

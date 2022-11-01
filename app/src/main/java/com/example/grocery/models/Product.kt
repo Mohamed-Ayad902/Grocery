@@ -10,6 +10,7 @@ data class Product(
     id: String= "",
     val image: String = "",
     val name: String = "",
+    var searchKeywords: List<String> = emptyList(),
     val brand: String = "",
     val category: String = "",
     val description: String = "",

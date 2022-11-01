@@ -1,6 +1,5 @@
 package com.example.grocery.di
 
-import com.example.grocery.network.ApiService
 import com.example.grocery.network.PaymentApi
 import com.example.grocery.other.Constants
 import dagger.Module

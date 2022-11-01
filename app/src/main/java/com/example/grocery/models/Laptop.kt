@@ -9,6 +9,7 @@ data class Laptop(
     @PrimaryKey val
     id: String = "",
     val name: String = "",
+    var searchKeywords: List<String> = emptyList(),
     val brand: String = "",
     val processor: String = "",
     val image: String = "",

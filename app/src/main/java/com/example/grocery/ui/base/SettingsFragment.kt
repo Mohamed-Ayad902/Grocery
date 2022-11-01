@@ -9,10 +9,17 @@ import androidx.navigation.fragment.findNavController
 import com.example.grocery.R
 import com.example.grocery.databinding.FragmentSettingsBinding
 import com.example.grocery.other.showToast
+import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentSettingsBinding
+
+    @Inject
+    lateinit var fireBaseAuth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +42,7 @@ class SettingsFragment : Fragment() {
                 findNavController().navigate(R.id.action_settingsFragment_to_profileFragment)
             }
             btnLogout.setOnClickListener {
+                fireBaseAuth.signOut()
                 findNavController().navigate(R.id.action_settingsFragment_to_phoneAuthenticationFragment)
             }
             btnAboutUs.setOnClickListener {

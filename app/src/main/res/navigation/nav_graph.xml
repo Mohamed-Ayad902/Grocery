@@ -115,7 +115,7 @@
     </fragment>
     <fragment
         android:id="@+id/exploreFragment"
-        android:name="com.example.grocery.ui.base.ExploreFragment"
+        android:name="com.example.grocery.ui.base.explore.ExploreFragment"
         android:label="fragment_explore"
         tools:layout="@layout/fragment_explore" >
         <action
@@ -170,18 +170,13 @@
         android:name="com.example.grocery.ui.order.OrderDetailsFragment"
         android:label="fragment_order_details"
         tools:layout="@layout/fragment_order_details" >
-        <action
-            android:id="@+id/action_orderDetailsFragment_to_trackOrderFragment2"
-            app:destination="@id/trackOrderFragment2" />
         <argument
             android:name="order"
             app:argType="com.example.grocery.models.Order" />
+        <action
+            android:id="@+id/action_orderDetailsFragment_to_trackOrderFragment"
+            app:destination="@id/trackOrderFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/trackOrderFragment2"
-        android:name="com.example.grocery.ui.order.TrackOrderFragment"
-        android:label="fragment_track_order"
-        tools:layout="@layout/fragment_track_order" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.grocery.ui.base.SettingsFragment"
@@ -220,5 +215,17 @@
         <action
             android:id="@+id/action_seeAllFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trackOrderFragment"
+        android:name="com.example.grocery.ui.order.TrackOrderFragment"
+        android:label="fragment_track_order"
+        tools:layout="@layout/fragment_track_order" >
+        <argument
+            android:name="orderId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_trackOrderFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
