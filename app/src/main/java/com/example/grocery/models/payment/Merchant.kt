@@ -1,4 +1,4 @@
-package com.example.grocery.models
+package com.example.grocery.models.payment
 
 data class Merchant(
     val city: String,

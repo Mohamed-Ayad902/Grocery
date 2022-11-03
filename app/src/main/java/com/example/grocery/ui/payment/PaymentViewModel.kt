@@ -2,9 +2,9 @@ package com.example.grocery.ui.payment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.grocery.models.*
+import com.example.grocery.models.payment.*
 import com.example.grocery.other.Resource
-import com.example.grocery.repositories.PayMopRepositoryImpl
+import com.example.grocery.repositories.PaymentRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PaymentViewModel @Inject constructor(
-    private val payMobRepository: PayMopRepositoryImpl
+    private val payMobRepository: PaymentRepositoryImpl
 ) : ViewModel() {
 
     private val _auth: MutableStateFlow<Resource<TokenResponse>> = MutableStateFlow(Resource.Idle())

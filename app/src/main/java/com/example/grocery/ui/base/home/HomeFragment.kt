@@ -2,12 +2,17 @@ package com.example.grocery.ui.base.home
 
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import android.widget.TextView.OnEditorActionListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,6 +45,9 @@ class HomeFragment : Fragment() {
     private lateinit var offersAdapter: OffersAdapter
     private lateinit var categoriesAdapter: CategoriesAdapter
     private lateinit var hotAndNewAdapter: HotAndNewAdapter
+
+    private val args: HomeFragmentArgs by navArgs()
+    private val phoneNumber by lazy { args.phoneNumber!! }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -127,6 +135,21 @@ class HomeFragment : Fragment() {
                     )
                 )
             }
+            etSearch.setOnEditorActionListener(object : OnEditorActionListener {
+                override fun onEditorAction(p0: TextView?, p1: Int, p2: KeyEvent?): Boolean {
+                    if (p1 == EditorInfo.IME_ACTION_SEARCH) {
+                        if (etSearch.text.toString().trim().isNotEmpty()) {
+                            findNavController().navigate(
+                                HomeFragmentDirections.actionHomeFragmentToExploreFragment(
+                                    etSearch.text.toString().lowercase()
+                                )
+                            )
+                            return true
+                        }
+                    }
+                    return false
+                }
+            })
         }
         observeListeners()
 
@@ -151,7 +174,11 @@ class HomeFragment : Fragment() {
                         "user observe error: ${response.message}  we need to complete profile"
                     )
                     showToast("Please complete your profile")
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProfileFragment())
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToProfileFragment(
+                            phoneNumber = phoneNumber
+                        )
+                    )
                 }
                 is Resource.Loading -> Log.d(TAG, "user observe: loading")
                 is Resource.Idle -> {} // nothing to do
@@ -167,15 +194,18 @@ class HomeFragment : Fragment() {
             when (response) {
                 is Resource.Loading -> {
                     Log.d(TAG, "offers observe loading:")
+                    loadingOffers(true)
                 }
                 is Resource.Error -> {
                     Log.e(TAG, "offers observe error : ${response.message}")
                     showToast("error loading offers")
+                    loadingOffers(false)
                 }
                 is Resource.Idle -> {}
                 is Resource.Success -> {
                     Log.d(TAG, "offers observe success :")
                     response.data?.let {
+                        loadingOffers(false)
                         offersAdapter.submitList(it)
                         binding.offersSlider.startAutoCycle()
                     }
@@ -187,15 +217,18 @@ class HomeFragment : Fragment() {
             when (response) {
                 is Resource.Loading -> {
                     Log.d(TAG, "categories observe loading:")
+                    loadingCategories(true)
                 }
                 is Resource.Error -> {
                     Log.e(TAG, "categories observe error : ${response.message}")
                     showToast("error loading categories")
+                    loadingCategories(false)
                 }
                 is Resource.Idle -> {}
                 is Resource.Success -> {
                     Log.d(TAG, "categories observe success :")
                     response.data?.let {
+                        loadingCategories(false)
                         categoriesAdapter.differ.submitList(it)
                     }
                 }
@@ -206,14 +239,17 @@ class HomeFragment : Fragment() {
             when (response) {
                 is Resource.Loading -> {
                     Log.d(TAG, "hot and new observe loading: ")
+                    loadingHot(true)
                 }
                 is Resource.Success -> {
                     Log.d(TAG, "hot and new observe success: ")
                     response.data?.let {
                         hotAndNewAdapter.differ.submitList(it)
+                        loadingHot(false)
                     }
                 }
                 is Resource.Error -> {
+                    loadingHot(false)
                     Log.e(TAG, "hot and new observe error: ${response.message}")
                     showToast("error loading hot and new items")
                 }
@@ -267,4 +303,41 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+    private fun loadingOffers(loading: Boolean) {
+        binding.apply {
+            if (loading) {
+                sliderShimmer.visibility = View.VISIBLE
+                offersSlider.visibility = View.GONE
+            } else {
+                sliderShimmer.visibility = View.GONE
+                offersSlider.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun loadingCategories(loading: Boolean) {
+        binding.apply {
+            if (loading) {
+                categoryShimmer.visibility = View.VISIBLE
+                categoriesRecyclerView.visibility = View.GONE
+            } else {
+                categoryShimmer.visibility = View.GONE
+                categoriesRecyclerView.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun loadingHot(loading: Boolean) {
+        binding.apply {
+            if (loading) {
+                hotShimmer.visibility = View.VISIBLE
+                hotAndNewRecyclerView.visibility = View.GONE
+            } else {
+                hotShimmer.visibility = View.GONE
+                hotAndNewRecyclerView.visibility = View.VISIBLE
+            }
+        }
+    }
+
 }

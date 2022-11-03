@@ -2,6 +2,8 @@ package com.example.grocery.ui.order
 
 
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,19 +15,21 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.grocery.databinding.FragmentCheckOutOrderBinding
-import com.example.grocery.models.BillingData
-import com.example.grocery.models.PaymentKeyRequest
 import com.example.grocery.models.PaymentMethod
-import com.example.grocery.models.PaymentRequest
+import com.example.grocery.models.payment.BillingData
+import com.example.grocery.models.payment.PaymentKeyRequest
+import com.example.grocery.models.payment.PaymentRequest
 import com.example.grocery.other.Resource
 import com.example.grocery.other.showToast
 import com.example.grocery.ui.account.UserViewModel
 import com.example.grocery.ui.account.collectLatest
 import com.example.grocery.ui.payment.PaymentViewModel
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.paymob.acceptsdk.*
 import com.paymob.acceptsdk.IntentConstants.TRANSACTION_SUCCESSFUL_CARD_SAVED
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 
 private const val TAG = "CheckOutOrderFragment mohamed"
@@ -43,7 +47,7 @@ class CheckOutOrderFragment : BottomSheetDialogFragment() {
     private val totalPrice by lazy { args.totalPrice }
     private val cartItems by lazy { args.cartItems.asList() }
 
-    private var userLocation = ""
+    private var userLocation: LatLng? = null
     private lateinit var token: String
     private var orderId = 0
     private lateinit var paymentKey: String
@@ -162,8 +166,8 @@ class CheckOutOrderFragment : BottomSheetDialogFragment() {
                 }
                 is Resource.Success -> {
                     response.data?.let {
-                        userLocation = it.location
-                        binding.tvDelivery.text = it.location
+                        userLocation = LatLng(it.latitude, it.longitude)
+                        binding.tvDelivery.text = getCityNameFromLocation(userLocation!!)
                     }
                     Log.d(TAG, "observe user done: ")
                 }
@@ -214,7 +218,7 @@ class CheckOutOrderFragment : BottomSheetDialogFragment() {
         if (binding.btnVisa.isChecked) {
             startPaymentProcess()
         } else {
-            checkoutViewModel.uploadOrder(userLocation, totalPrice, cartItems, PaymentMethod.CASH)
+            checkoutViewModel.uploadOrder(userLocation!!, totalPrice, cartItems, PaymentMethod.CASH)
         }
     }
 
@@ -263,7 +267,7 @@ class CheckOutOrderFragment : BottomSheetDialogFragment() {
                         extras!!.getString(PayResponseKeys.DATA_MESSAGE)
                     )
                     checkoutViewModel.uploadOrder(
-                        userLocation,
+                        userLocation!!,
                         totalPrice,
                         cartItems,
                         PaymentMethod.ONLINE
@@ -272,4 +276,10 @@ class CheckOutOrderFragment : BottomSheetDialogFragment() {
             }
         }
 
+    private fun getCityNameFromLocation(locationLatLng: LatLng): String {
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        val addresses: List<Address> =
+            geocoder.getFromLocation(locationLatLng.latitude, locationLatLng.longitude, 1)!!
+        return addresses[0].getAddressLine(0)
+    }
 }

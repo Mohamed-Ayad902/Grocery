@@ -77,6 +77,7 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_8sdp"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/et_search"
             app:sliderAnimationDuration="800"
             app:sliderAutoCycleDirection="back_and_forth"
@@ -92,6 +93,18 @@
             app:sliderScrollTimeInSec="2"
             app:sliderStartAutoCycle="true" />
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/sliderShimmer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_180sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            app:layout_constraintTop_toBottomOf="@id/et_search">
+
+            <include layout="@layout/slider_shimmer" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <TextView
             android:id="@+id/tv_categories"
@@ -104,14 +117,40 @@
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/offers_slider" />
+            app:layout_constraintTop_toBottomOf="@id/offers_slider"
+            app:layout_goneMarginTop="@dimen/_205sdp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categoriesRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/tv_categories" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/categoryShimmer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintTop_toBottomOf="@id/tv_categories">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <include layout="@layout/category_shimmer" />
+
+                <include layout="@layout/category_shimmer" />
+
+                <include layout="@layout/category_shimmer" />
+
+                <include layout="@layout/category_shimmer" />
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <TextView
             android:id="@+id/tv_hotAndNew"
@@ -124,7 +163,8 @@
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/categoriesRecyclerView" />
+            app:layout_constraintTop_toBottomOf="@id/categoriesRecyclerView"
+            app:layout_goneMarginTop="@dimen/_150sdp" />
 
         <TextView
             android:id="@+id/btn_seeAllBestDeals"
@@ -142,101 +182,48 @@
             android:id="@+id/hotAndNewRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/tv_hotAndNew" />
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/tv_vegetables"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="@dimen/_8sdp"-->
-        <!--            android:layout_marginTop="@dimen/_10sdp"-->
-        <!--            android:text="Fresh Vegetables"-->
-        <!--            android:textColor="@color/white"-->
-        <!--            android:textSize="@dimen/_14ssp"-->
-        <!--            android:textStyle="bold"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/hotAndNewRecyclerView" />-->
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/hotShimmer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            app:layout_constraintTop_toBottomOf="@id/tv_hotAndNew">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/hot_and_new_shimmer" />
+
+                    <include layout="@layout/hot_and_new_shimmer" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/hot_and_new_shimmer" />
+
+                    <include layout="@layout/hot_and_new_shimmer" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/btn_seeAllVegetables"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginEnd="@dimen/_8sdp"-->
-        <!--            android:text="See All"-->
-        <!--            android:textColor="@color/gray"-->
-        <!--            android:textSize="@dimen/_11ssp"-->
-        <!--            app:layout_constraintBottom_toBottomOf="@id/tv_vegetables"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="@id/tv_vegetables" />-->
-
-        <!--        <androidx.recyclerview.widget.RecyclerView-->
-        <!--            android:id="@+id/vegetablesRecyclerView"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="@dimen/_10sdp"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/tv_vegetables" />-->
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/tv_eggAndMilk"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="@dimen/_8sdp"-->
-        <!--            android:layout_marginTop="@dimen/_10sdp"-->
-        <!--            android:text="Eggs and milk"-->
-        <!--            android:textColor="@color/white"-->
-        <!--            android:textSize="@dimen/_14ssp"-->
-        <!--            android:textStyle="bold"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/vegetablesRecyclerView" />-->
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/btn_seeAllEggs"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginEnd="@dimen/_8sdp"-->
-        <!--            android:text="See All"-->
-        <!--            android:textColor="@color/gray"-->
-        <!--            android:textSize="@dimen/_11ssp"-->
-        <!--            app:layout_constraintBottom_toBottomOf="@id/tv_eggAndMilk"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="@id/tv_eggAndMilk" />-->
-
-        <!--        <androidx.recyclerview.widget.RecyclerView-->
-        <!--            android:id="@+id/eggsRecyclerView"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="@dimen/_10sdp"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/tv_eggAndMilk" />-->
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/tv_cereal"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="@dimen/_8sdp"-->
-        <!--            android:layout_marginTop="@dimen/_10sdp"-->
-        <!--            android:text="Cereal"-->
-        <!--            android:textColor="@color/white"-->
-        <!--            android:textSize="@dimen/_14ssp"-->
-        <!--            android:textStyle="bold"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/eggsRecyclerView" />-->
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/btn_seeAllCereal"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginEnd="@dimen/_8sdp"-->
-        <!--            android:text="See All"-->
-        <!--            android:textColor="@color/gray"-->
-        <!--            android:textSize="@dimen/_11ssp"-->
-        <!--            app:layout_constraintBottom_toBottomOf="@id/tv_cereal"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="@id/tv_cereal" />-->
-
-        <!--        <androidx.recyclerview.widget.RecyclerView-->
-        <!--            android:id="@+id/cerealRecyclerView"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="@dimen/_10sdp"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/tv_cereal" />-->
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

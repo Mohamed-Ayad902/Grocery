@@ -1,6 +1,8 @@
 package com.example.grocery.adapters
 
 import android.annotation.SuppressLint
+import android.location.Address
+import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -40,7 +42,15 @@ class OrdersAdapter(private val listener: OnOrderClickListener) :
             tvOrderDetails.text =
                 order.products.size.toString() + " items -> " + order.totalPrice.toString() + "$"
             tvOrderId.text = order.id
-            tvOrderLocation.text = order.orderLocation
+
+            val geocoder = Geocoder(this.root.context!!, Locale.getDefault())
+            val addresses: List<Address> =
+                geocoder.getFromLocation(
+                    order.latitude,
+                    order.longitude,
+                    1
+                )!!
+            tvOrderLocation.text = addresses[0].getAddressLine(0)
             when (order.status) {
                 Status.PLACED -> tvOrderStatus.text = "Placed"
                 Status.CONFIRMED -> tvOrderStatus.text = "Confirmed"

@@ -64,6 +64,19 @@ class CartFragment : Fragment() {
         }
 
         viewModel.getCartItems().collectLatest(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                binding.apply {
+                    btnCheckout.visibility = View.INVISIBLE
+                    lottieAnimation.visibility = View.VISIBLE
+                    tvEmptyCart.visibility = View.VISIBLE
+                }
+            } else {
+                binding.apply {
+                    btnCheckout.visibility = View.VISIBLE
+                    lottieAnimation.visibility = View.GONE
+                    tvEmptyCart.visibility = View.GONE
+                }
+            }
             cartAdapter.differ.submitList(it)
             it.forEach { item ->
                 totalPrice += item.productQuantity * item.productPrice

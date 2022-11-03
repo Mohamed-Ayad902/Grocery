@@ -117,15 +117,18 @@ class SeeAllFragment : Fragment() {
         viewModel.laptops.collectLatest(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Loading -> {
+                    isLoading(true)
                     Log.d(TAG, "observe laptops: loading")
                 }
                 is Resource.Success -> {
+                    isLoading(false)
                     Log.d(TAG, "observe laptops: success ${response.data?.size}")
                     response.data?.let {
                         laptopsAdapter.differ.submitList(it)
                     }
                 }
                 is Resource.Error -> {
+                    isLoading(false)
                     Log.e(TAG, "observe laptops error : ${response.message}")
                 }
                 is Resource.Idle -> {}
@@ -135,9 +138,11 @@ class SeeAllFragment : Fragment() {
         viewModel.products.collectLatest(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Loading -> {
+                    isLoading(true)
                     Log.d(TAG, "observe products: loading")
                 }
                 is Resource.Success -> {
+                    isLoading(false)
                     Log.d(
                         TAG,
                         "observe products: success ${response.data?.size}  ${response.data.toString()}"
@@ -147,6 +152,7 @@ class SeeAllFragment : Fragment() {
                     }
                 }
                 is Resource.Error -> {
+                    isLoading(false)
                     Log.e(TAG, "observe products error : ${response.message}")
                 }
                 is Resource.Idle -> {}
@@ -204,6 +210,18 @@ class SeeAllFragment : Fragment() {
                 showToast("added to cart")
         }
 
+    }
+
+    private fun isLoading(loading: Boolean) {
+        binding.apply {
+            if (loading) {
+                allShimmer.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
+            } else {
+                allShimmer.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
+        }
     }
 
 }

@@ -1,6 +1,8 @@
 package com.example.grocery.ui.account
 
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -23,10 +25,12 @@ import com.example.grocery.other.Constants
 import com.example.grocery.other.Resource
 import com.example.grocery.other.showToast
 import com.example.grocery.ui.auth.AuthenticationViewModel
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.*
 
 private const val TAG = "ProfileFragment mohamed"
 
@@ -39,6 +43,8 @@ class ProfileFragment : Fragment() {
     private var image: Uri? = null
     private var hasSelectedLocation = false
     private val args by navArgs<ProfileFragmentArgs>()
+    private val phoneNumber by lazy { args.phoneNumber!! }
+    private var latLng: LatLng? = null
 
     private lateinit var binding: FragmentProfileBinding
 
@@ -62,14 +68,13 @@ class ProfileFragment : Fragment() {
         subscribeToObservers()
         val user = args.user
 
-        if (user != null) {
+        user?.let {
             binding.apply {
-                etName.editText?.setText(user.name)
-                tvLocation.text = user.location
-                Glide.with(requireContext()).load(user.image).into(imageView)
+                etName.editText?.setText(it.name)
+                tvLocation.text = getCityNameFromLocation(LatLng(it.latitude, it.longitude))
+                Glide.with(requireContext()).load(it.image).into(imageView)
             }
         }
-
         binding.apply {
             btnSubmit.setOnClickListener {
                 etName.error = null
@@ -108,16 +113,18 @@ class ProfileFragment : Fragment() {
         }
 
     private fun submitData() {
-        val name = binding.etName.editText?.text.toString().trim()
-        val location = binding.tvLocation.text.toString().trim()
-        authViewModel.updateUserInfo(name, image, location)
+        latLng?.let {
+            val name = binding.etName.editText?.text.toString().trim()
+            authViewModel.updateUserInfo(name, image, it.latitude, it.longitude, phoneNumber)
+        }
     }
 
     private fun subscribeToObservers() {
-        userInfoViewModel.userLocation.collectLatest(viewLifecycleOwner) {
+        userInfoViewModel.latLng.collectLatest(viewLifecycleOwner) {
             it?.let {
+                latLng = it
                 binding.apply {
-                    tvLocation.text = it
+                    tvLocation.text = getCityNameFromLocation(it)
                     tvLocation.setTextColor(Constants.COLOR_GREEN)
                 }
                 hasSelectedLocation = true
@@ -130,10 +137,14 @@ class ProfileFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     response.data?.let {
-                        Log.d(TAG, "observe user data : success")
+                        Log.d(
+                            TAG,
+                            "observe user data : success location -- ${it.latitude}  ${it.longitude}"
+                        )
                         binding.apply {
                             etName.editText?.setText(it.name)
-                            tvLocation.text = it.location
+                            tvLocation.text =
+                                getCityNameFromLocation(LatLng(it.latitude, it.longitude))
                             Glide.with(requireContext()).load(it.image).into(imageView)
                         }
                     }
@@ -143,7 +154,6 @@ class ProfileFragment : Fragment() {
                 }
                 is Resource.Idle -> {}
             }
-
         }
 
         authViewModel.userInfo.collectLatest(viewLifecycleOwner) {
@@ -167,6 +177,15 @@ class ProfileFragment : Fragment() {
         }
 
     }
+
+    private fun getCityNameFromLocation(locationLatLng: LatLng): String {
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        val addresses: List<Address> =
+            geocoder.getFromLocation(locationLatLng.latitude, locationLatLng.longitude, 1)!!
+        return addresses[0].getAddressLine(0)
+    }
+
+
 }
 
 inline fun <T> Flow<T>.collectLatest(

@@ -56,16 +56,18 @@ class AuthenticationRepository @Inject constructor(
     suspend fun uploadUserInformation(
         userName: String,
         imageUri: Uri?,
-        userLocation: String
+        latitude: Double,
+        longitude: Double,
+        phoneNumber: String
     ): Resource<String> {
         return try {
             var accountStatusMessage = "Account created successfully"
             if (imageUri != null) {
                 val imagePath = uploadUserImage(imageUri)
-                val user = User(userUid, userName, imagePath, userLocation)
+                val user = User(userUid, userName, imagePath, latitude, longitude, phoneNumber)
                 userCollection.document(userUid).set(user).await()
             } else {
-                val user = User(userUid, userName, "", userLocation)
+                val user = User(userUid, userName, "", latitude, longitude, phoneNumber)
                 userCollection.document(userUid).set(user).await()
                 accountStatusMessage = "Account updated successfully"
             }

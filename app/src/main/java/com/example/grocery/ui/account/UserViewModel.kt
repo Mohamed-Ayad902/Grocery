@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.grocery.models.User
 import com.example.grocery.other.Resource
 import com.example.grocery.repositories.AuthenticationRepository
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,15 +19,15 @@ class UserViewModel @Inject constructor(private val repository: AuthenticationRe
     private val _user = MutableStateFlow<Resource<User>>(Resource.Idle())
     val user: StateFlow<Resource<User>> = _user
 
-    private val _userLocation = MutableStateFlow<String?>(null)
-    val userLocation: StateFlow<String?> = _userLocation
+    private val _userLocation = MutableStateFlow<LatLng?>(null)
+    val latLng: StateFlow<LatLng?> = _userLocation
 
     init {
         getUserInformation()
     }
 
-    fun setUserLocation(location: String) {
-        _userLocation.value = location
+    fun setUserLocation(latLng: LatLng) {
+        _userLocation.value = latLng
     }
 
     private fun getUserInformation() {

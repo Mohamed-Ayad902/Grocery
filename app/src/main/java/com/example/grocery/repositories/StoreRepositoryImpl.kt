@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.grocery.models.*
 import com.example.grocery.other.Constants
 import com.example.grocery.other.Resource
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -87,6 +88,7 @@ class StoreRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getLaptopById(id: String): Resource<Laptop> {
+        Log.d("mohamed", "getLaptopById: $id")
         return try {
             val laptopDocument =
                 fireStore.collection(Constants.PRODUCTS_COLLECTION).document(id).get().await()
@@ -95,7 +97,7 @@ class StoreRepositoryImpl @Inject constructor(
                 Resource.Error("laptop document is null", null)
             Resource.Success(laptop!!)
         } catch (e: Exception) {
-            Resource.Error(e.message!!)
+            Resource.Error(e.stackTraceToString())
         }
     }
 
@@ -113,7 +115,7 @@ class StoreRepositoryImpl @Inject constructor(
     }
 
     override suspend fun uploadOrder(
-        orderLocation: String,
+        orderLocation: LatLng,
         totalPrice: Int,
         products: List<Cart>,
         paymentMethod: PaymentMethod
@@ -128,7 +130,8 @@ class StoreRepositoryImpl @Inject constructor(
                     id,
                     userId,
                     System.currentTimeMillis(),
-                    orderLocation,
+                    orderLocation.latitude,
+                    orderLocation.longitude,
                     Status.PLACED,
                     totalPrice,
                     products,

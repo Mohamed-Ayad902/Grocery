@@ -2,6 +2,7 @@ package com.example.grocery.repositories
 
 import com.example.grocery.models.*
 import com.example.grocery.other.Resource
+import com.google.android.gms.maps.model.LatLng
 
 interface StoreRepository {
 
@@ -20,7 +21,7 @@ interface StoreRepository {
     suspend fun getProductById(id: String): Resource<Product>
 
     suspend fun uploadOrder(
-        orderLocation: String,
+        orderLocation: LatLng,
         totalPrice: Int,
         products: List<Cart>,
         paymentMethod: PaymentMethod

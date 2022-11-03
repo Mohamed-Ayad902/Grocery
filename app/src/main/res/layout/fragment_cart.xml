@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/gradient_bg"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg"
     tools:context=".ui.base.cart.CartFragment">
 
     <TextView
@@ -33,12 +33,38 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@drawable/button_bg"
         android:padding="@dimen/_12sdp"
         android:text="checkout"
         android:textColor="@color/white"
-        android:background="@drawable/button_bg"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/tv_emptyCart"
+        app:layout_constraintTop_toBottomOf="@id/tv_myCart"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/empty_cart"
+        app:lottie_speed="1" />
+
+    <TextView
+        android:id="@+id/tv_emptyCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:gravity="center"
+        android:text="Your cart is empty!\nStart shopping now"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_13ssp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

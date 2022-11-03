@@ -126,7 +126,11 @@ class VerifyFragment : Fragment() {
     }
 
     private fun navigateToHomeFragment() {
-        findNavController().navigate(VerifyFragmentDirections.actionVerifyFragmentToHomeFragment())
+        findNavController().navigate(
+            VerifyFragmentDirections.actionVerifyFragmentToHomeFragment(
+                phoneVerify.phoneNumber
+            )
+        )
     }
 
 

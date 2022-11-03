@@ -1,4 +1,4 @@
-package com.example.grocery.models
+package com.example.grocery.models.payment
 
 data class ShippingData(
     val apartment: String,

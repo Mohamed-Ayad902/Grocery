@@ -1,4 +1,6 @@
-package com.example.grocery.models
+package com.example.grocery.models.payment
+
+import com.example.grocery.models.Cart
 
 data class PaymentResponse(
     val amount_cents: Int,

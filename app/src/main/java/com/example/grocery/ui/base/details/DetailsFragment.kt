@@ -1,11 +1,14 @@
 package com.example.grocery.ui.base.details
 
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -17,6 +20,8 @@ import com.example.grocery.models.Product
 import com.example.grocery.other.showToast
 import com.example.grocery.ui.account.collectLatest
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment() {
@@ -57,7 +62,6 @@ class DetailsFragment : Fragment() {
         }
 
         subscribeToObservers()
-
     }
 
     private fun addToCart() {
@@ -122,32 +126,76 @@ class DetailsFragment : Fragment() {
     private fun initLaptopViews(laptop: Laptop) {
         binding.apply {
             tvProcessor.text = laptop.processor
-            tvProcessorSpeed.text = laptop.cpuSpeed.toString() + "-GH"
+            tvProcessorSpeed.text = laptop.cpuSpeed.toString() + "-GHZ"
             tvName.text = laptop.name
             tvBrand.text = laptop.brand
             tvDescription.text = laptop.description
             productPriceTextView.text = laptop.price.toString() + "$"
             Glide.with(requireContext()).load(laptop.image).into(imageView)
 
+            val fadeIn = AnimationUtils.loadAnimation(requireContext(), R.anim.fast_fade_in)
+            val fallDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in)
+
+            lifecycleScope.launch {
+                binding.imageView.startAnimation(fallDown)
+                delay(200)
+                binding.apply {
+                    tvName.visibility = View.VISIBLE
+                    tvName.startAnimation(fadeIn)
+                    tvBrand.visibility = View.VISIBLE
+                    tvBrand.startAnimation(fadeIn)
+                    tvDescription.visibility = View.VISIBLE
+                    tvDescription.startAnimation(fadeIn)
+                    tvProcessor.visibility = View.VISIBLE
+                    tvProcessor.startAnimation(fadeIn)
+                    tvProcessorSpeed.visibility = View.VISIBLE
+                    tvProcessorSpeed.startAnimation(fadeIn)
+                }
+            }
+
             ramLayout.tvTitle.text = "Ram"
             ramLayout.tvValue.text = laptop.ram.toString()
             ramLayout.progressBar.max = 32
-            ramLayout.progressBar.progress = laptop.ram
 
             hddLayout.tvTitle.text = "HDD"
             hddLayout.tvValue.text = laptop.hdd.toString()
             hddLayout.progressBar.max = 1000
-            hddLayout.progressBar.progress = laptop.hdd
 
             ssdLayout.tvTitle.text = "SSD"
             ssdLayout.tvValue.text = laptop.ssd.toString()
             ssdLayout.progressBar.max = 1000
-            ssdLayout.progressBar.progress = laptop.ssd
 
             cameraLayout.tvTitle.text = "Camera"
             cameraLayout.tvValue.text = laptop.camera.toString()
             cameraLayout.progressBar.max = 1080
-            cameraLayout.progressBar.progress = laptop.camera
+
+            ValueAnimator.ofInt(0, laptop.ram).apply {
+                duration = 900
+                addUpdateListener {
+                    binding.ramLayout.progressBar.progress = it.animatedValue.toString().toInt()
+                }
+            }.start()
+
+            ValueAnimator.ofInt(0, laptop.hdd).apply {
+                duration = 1500
+                addUpdateListener {
+                    binding.hddLayout.progressBar.progress = it.animatedValue.toString().toInt()
+                }
+            }.start()
+
+            ValueAnimator.ofInt(0, laptop.ssd).apply {
+                duration = 1500
+                addUpdateListener {
+                    binding.ssdLayout.progressBar.progress = it.animatedValue.toString().toInt()
+                }
+            }.start()
+
+            ValueAnimator.ofInt(0, laptop.camera).apply {
+                duration = 1500
+                addUpdateListener {
+                    binding.cameraLayout.progressBar.progress = it.animatedValue.toString().toInt()
+                }
+            }.start()
         }
     }
 
@@ -158,6 +206,22 @@ class DetailsFragment : Fragment() {
             tvDescription.text = product.description
             productPriceTextView.text = product.price.toString() + "$"
             Glide.with(requireContext()).load(product.image).into(imageView)
+
+            val fadeIn = AnimationUtils.loadAnimation(requireContext(), R.anim.fast_fade_in)
+            val fallDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in)
+
+            lifecycleScope.launch {
+                binding.imageView.startAnimation(fallDown)
+                delay(200)
+                binding.apply {
+                    tvName.visibility = View.VISIBLE
+                    tvName.startAnimation(fadeIn)
+                    tvBrand.visibility = View.VISIBLE
+                    tvBrand.startAnimation(fadeIn)
+                    tvDescription.visibility = View.VISIBLE
+                    tvDescription.startAnimation(fadeIn)
+                }
+            }
 
             linearLayout.visibility = View.GONE
         }

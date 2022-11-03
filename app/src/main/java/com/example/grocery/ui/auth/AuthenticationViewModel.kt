@@ -45,10 +45,17 @@ class AuthenticationViewModel @Inject constructor
         _auth.value = authState
     }
 
-    fun updateUserInfo(userName: String, imageUri: Uri?, userLocation: String) {
+    fun updateUserInfo(
+        userName: String,
+        imageUri: Uri?,
+        latitude: Double,
+        longitude: Double,
+        phoneNumber: String
+    ) {
         _userInfo.value = Resource.Loading()
         viewModelScope.launch(Dispatchers.IO) {
-            _userInfo.value = (repository.uploadUserInformation(userName, imageUri, userLocation))
+            _userInfo.value =
+                (repository.uploadUserInformation(userName, imageUri, latitude, longitude, phoneNumber))
         }
 
     }

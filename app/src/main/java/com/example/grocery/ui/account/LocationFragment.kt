@@ -2,10 +2,9 @@ package com.example.grocery.ui.account
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.grocery.databinding.FragmentLocationBinding
+import com.example.grocery.models.User
 import com.example.grocery.other.Constants
 import com.example.grocery.other.Constants.ZOOM
 import com.example.grocery.other.Resource
@@ -29,7 +29,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import javax.inject.Inject
+import javax.inject.Named
 
 private const val TAG = "LocationFragment mohamed"
 
@@ -41,6 +42,15 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
     private var map: GoogleMap? = null
     private var locationLatLng = LatLng(25.0, 29.0) // just random default location
     private var locationPermissionGranted = false
+    private var user: User? = null
+
+    @Inject
+    @Named(Constants.ENABLE_GPS_DIALOG)
+    lateinit var enableGpsDialog: Dialog
+
+    @Inject
+    @Named(Constants.PERMISSION_DIALOG)
+    lateinit var permissionDialog: Dialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,8 +64,8 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnConfirm.setOnClickListener {
-            if (locationPermissionGranted) {
-                userViewModel.setUserLocation(getCityNameFromLocation(locationLatLng))
+            if (locationPermissionGranted && isGpsOpened()) {
+                userViewModel.setUserLocation(locationLatLng)
                 findNavController().popBackStack()
             }
         }
@@ -64,18 +74,25 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
 
         userViewModel.user.collectLatest(viewLifecycleOwner) { response ->
             when (response) {
-                is Resource.Error -> {
-                    Log.e(TAG, "observe user details: error -> ${response.message}")
-                }
-                is Resource.Idle -> TODO()
                 is Resource.Loading -> {
                     Log.w(TAG, "observe user details: loading")
                 }
                 is Resource.Success -> {
                     response.data?.let {
-                        Log.d(TAG, "observe user details success: ${it.location}")
+                        user = it
+                        Log.d(
+                            TAG,
+                            "observe user details success: ${it.latitude}  --  ${it.longitude}"
+                        )
+                        locationLatLng = LatLng(it.latitude, it.longitude)
+                        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(locationLatLng, ZOOM))
+                        map?.addMarker(MarkerOptions().position(locationLatLng))
                     }
                 }
+                is Resource.Error -> {
+                    Log.e(TAG, "observe user details: error -> ${response.message}")
+                }
+                is Resource.Idle -> {}
             }
         }
 
@@ -86,21 +103,25 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         binding.mapView.onSaveInstanceState(outState)
     }
 
-    private fun getCityNameFromLocation(locationLatLng: LatLng): String {
-        val geocoder = Geocoder(requireContext(), Locale.getDefault())
-        val addresses: List<Address> =
-            geocoder.getFromLocation(locationLatLng.latitude, locationLatLng.longitude, 1)!!
-        return addresses[0].getAddressLine(0)
-    }
-
     override fun onMapReady(map: GoogleMap) {
         this.map = map
         Log.d(TAG, "onMapReady: ")
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI()
         // Get the current location of the device and set the position of the map.
-        if (isGpsOpened())
+        if (isGpsOpened() && user == null)
             getDeviceLocation()
+        if (user != null) {
+            map.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    LatLng(
+                        user!!.latitude,
+                        user!!.longitude
+                    ), ZOOM
+                )
+            )
+            map.addMarker(MarkerOptions().position(LatLng(user!!.latitude, user!!.longitude)))
+        }
     }
 
     private fun getLocationPermission() {
@@ -137,6 +158,12 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
                     grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
                     locationPermissionGranted = true
+                } else if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        requireActivity(),
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    )
+                ) {
+                    permissionDialog.show()
                 }
             }
             else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -242,7 +269,7 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
         val manager =
             requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            showToast("افتح الجي بي اس يا عرص")
+            enableGpsDialog.show()
             return false
         }
         showToast("gps opened")

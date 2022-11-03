@@ -8,6 +8,7 @@ import com.example.grocery.models.PaymentMethod
 import com.example.grocery.other.Resource
 import com.example.grocery.repositories.LocalRepositoryImpl
 import com.example.grocery.repositories.StoreRepositoryImpl
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -31,7 +32,7 @@ class CheckoutViewModel @Inject constructor(
         }
     }
 
-    fun uploadOrder(orderLocation: String, totalPrice: Int, products: List<Cart>,paymentMethod: PaymentMethod) {
+    fun uploadOrder(orderLocation: LatLng, totalPrice: Int, products: List<Cart>,paymentMethod: PaymentMethod) {
         _order.value = Resource.Loading()
         viewModelScope.launch(Dispatchers.IO) {
             _order.value = repository.uploadOrder(orderLocation, totalPrice, products,paymentMethod)

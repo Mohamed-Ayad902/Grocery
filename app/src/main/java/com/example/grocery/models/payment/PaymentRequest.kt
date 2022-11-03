@@ -1,5 +1,6 @@
-package com.example.grocery.models
+package com.example.grocery.models.payment
 
+import com.example.grocery.models.Item
 import com.google.gson.annotations.SerializedName
 
 data class PaymentRequest(

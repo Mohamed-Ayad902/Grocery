@@ -54,21 +54,35 @@ class OrdersFragment : Fragment() {
         viewModel.orders.collectLatest(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Loading -> {
+                    isLoading(true)
                     Log.w(TAG, "observe user orders: loading")
                 }
                 is Resource.Success -> {
                     response.data?.let {
+                        isLoading(false)
                         Log.d(TAG, "observe user orders: success")
                         ordersAdapter.differ.submitList(it)
                     }
                 }
                 is Resource.Error -> {
+                    isLoading(false)
                     Log.e(TAG, "observe user orders: error : ${response.message}")
                 }
                 is Resource.Idle -> {}
             }
         }
+    }
 
+    private fun isLoading(loading: Boolean) {
+        binding.apply {
+            if (loading) {
+                ordersShimmer.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
+            } else {
+                ordersShimmer.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
+        }
     }
 
 }

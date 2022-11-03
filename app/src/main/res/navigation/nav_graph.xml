@@ -79,6 +79,11 @@
             app:argType="com.example.grocery.models.User"
             app:nullable="true"
             android:defaultValue="@null" />
+        <argument
+            android:name="phoneNumber"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/locationFragment"
@@ -103,6 +108,14 @@
         <action
             android:id="@+id/action_homeFragment_to_seeAllFragment"
             app:destination="@id/seeAllFragment" />
+        <argument
+            android:name="phoneNumber"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_homeFragment_to_exploreFragment"
+            app:destination="@id/exploreFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
@@ -121,6 +134,11 @@
         <action
             android:id="@+id/action_exploreFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <argument
+            android:name="query"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"

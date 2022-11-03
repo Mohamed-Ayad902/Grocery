@@ -37,9 +37,35 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_20sdp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_back" />
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/ordersShimmer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintTop_toBottomOf="@id/btn_back">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/orders_shimmer" />
+
+            <include layout="@layout/orders_shimmer" />
+
+            <include layout="@layout/orders_shimmer" />
+
+            <include layout="@layout/orders_shimmer" />
+
+            <include layout="@layout/orders_shimmer" />
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

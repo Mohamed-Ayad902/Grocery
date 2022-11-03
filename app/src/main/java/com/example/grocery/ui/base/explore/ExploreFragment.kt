@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grocery.adapters.SearchedLaptopsAdapter
 import com.example.grocery.adapters.SearchedProductsAdapter
@@ -33,6 +34,8 @@ class ExploreFragment : Fragment() {
     private val viewModel: ExploreViewModel by viewModels()
     private lateinit var laptopsAdapter: SearchedLaptopsAdapter
     private lateinit var productsAdapter: SearchedProductsAdapter
+    private val args: ExploreFragmentArgs by navArgs()
+    private val passedQuery by lazy { args.query }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,6 +76,10 @@ class ExploreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        passedQuery?.let {
+            binding.etSearch.setText(it)
+            viewModel.search(it)
+        }
         var job: Job? = null
         binding.etSearch.addTextChangedListener { editable ->
             job?.cancel()
@@ -94,9 +101,11 @@ class ExploreFragment : Fragment() {
             when (response) {
                 is Resource.Loading -> {
                     Log.w(TAG, "observe search : loading")
+                    loadingSearch(true)
                 }
                 is Resource.Success -> {
                     response.data?.let {
+                        loadingSearch(false)
                         Log.d(
                             TAG,
                             "observe search success laptops: ${it.laptop.size}  products: ${it.product.size}"
@@ -107,9 +116,22 @@ class ExploreFragment : Fragment() {
                         if (it.product.isNotEmpty()) {
                             productsAdapter.differ.submitList(it.product)
                         } else productsAdapter.differ.submitList(emptyList())
+
+                        if (it.laptop.isEmpty() && it.product.isEmpty()) {
+                            binding.apply {
+                                tvNoResults.visibility = View.VISIBLE
+                                lottieAnimation.visibility = View.VISIBLE
+                            }
+                        } else {
+                            binding.apply {
+                                tvNoResults.visibility = View.GONE
+                                lottieAnimation.visibility = View.GONE
+                            }
+                        }
                     }
                 }
                 is Resource.Error -> {
+                    loadingSearch(false)
                     Log.e(TAG, "observe search error: ${response.message}")
                 }
                 is Resource.Idle -> {}
@@ -155,6 +177,20 @@ class ExploreFragment : Fragment() {
                     showToast("error loading product")
                 }
                 is Resource.Idle -> {}
+            }
+        }
+    }
+
+    private fun loadingSearch(loading: Boolean) {
+        binding.apply {
+            if (loading) {
+                searchShimmer.visibility = View.VISIBLE
+                productsRecyclerView.visibility = View.GONE
+                laptopsRecyclerView.visibility = View.GONE
+            } else {
+                searchShimmer.visibility = View.GONE
+                productsRecyclerView.visibility = View.VISIBLE
+                laptopsRecyclerView.visibility = View.VISIBLE
             }
         }
     }
